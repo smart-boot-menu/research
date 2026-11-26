@@ -3,14 +3,24 @@
 **Last verified:** 2026-11-26  
 **Scope:** End-to-end virtual hardware simulation, firmware stacks, Apple Silicon M5 workstation workflow, CI runner constraints, and Rust verification tooling.
 
+## Verified by sbm-lab on 2026-11-26
+
+These are the facts the lab actually observed. Measured timings are in [sbm-lab-2026-11-26.md](../validation/evidence/sbm-lab-2026-11-26.md).
+
+- Homebrew QEMU is emulator version 11.1.3. `qemu-system-aarch64 -accel help` lists `hvf` and `tcg`. `qemu-system-x86_64 -accel help` lists only `tcg`. HVF is not an x86 accelerator on this Mac.
+- The firmware banner that booted is `edk2-stable202408-prebuilt.qemu.org`. ADR-008 names `edk2-stable202611`. The lab records the banner it sees and does not claim the ADR pin until that string is observed.
+- swtpm is TPM emulator version 0.10.2.
+- U-Boot `v2026.10` `qemu_arm64` builds with `CONFIG_EFI_LOADER=y`. The separate Apple Silicon probe in `sbm-as` passed under TCG after HVF aborted. That log is [sbm-as-uboot-efi-2026-11-26.md](../validation/evidence/sbm-as-uboot-efi-2026-11-26.md). QEMU `virt` is not an Apple Silicon Mac.
+- A 10-run aarch64 HVF sample of host milliseconds until `efi-launched` has min 5508, p50 5525, p95 5812, and max 5812. It is not a physical-hardware measurement.
+
 ---
 
 ## 1. Core Simulation Stack (November 2026 Versions)
 
 | Tool | Latest Verified Version (Nov 2026) | License | Role in `sbm-lab` |
 |---|---|---|---|
-| **QEMU** (`qemu-system-x86_64`, `qemu-system-aarch64`) | QEMU `9.x` / `10.x` (via Homebrew on macOS, distro pkg on Linux CI) | `GPL-2.0-only` | Full-system UEFI VM harness for `sbm-uefi`, `sbm-core`, multi-disk GPT fixtures, and `sbm-server` integration tests |
-| **EDK II — OVMF & AAVMF** | **`edk2-stable202611`** (Nov 20, 2026) | `BSD-2-Clause-Patent` | Standard x86-64 (`OVMF_CODE.fd`) and ARM64 (`AAVMF_CODE.fd` / `QEMU_EFI.fd`) UEFI firmware, including Secure Boot variants (`OVMF_CODE.secboot.fd`) |
+| **QEMU** (`qemu-system-x86_64`, `qemu-system-aarch64`) | **11.1.3** on the dev Mac (Homebrew). Linux CI uses the distro package. | `GPL-2.0-only` | Full-system UEFI VM harness for `sbm-uefi`, `sbm-core`, multi-disk GPT fixtures, and `sbm-server` integration tests |
+| **EDK II — OVMF & AAVMF** | Banner observed: `edk2-stable202408-prebuilt.qemu.org`. ADR-008 pin: `edk2-stable202611` (not observed) | `BSD-2-Clause-Patent` | Standard x86-64 and ARM64 UEFI firmware shipped with QEMU, including a Secure Boot code image. The bundled variable store is not key-enrolled. |
 | **Das U-Boot (`qemu_arm64`)** | **`v2026.10`** (Oct 5, 2026) | `GPL-2.0-or-later` | Emulates U-Boot's `CONFIG_EFI_LOADER` UEFI environment (closely mirroring Asahi U-Boot's UEFI subset without requiring physical Apple hardware!) |
 | **`swtpm`** | **`v0.10.2`** (Aug 2026) | `BSD-3-Clause` | Software TPM 2.0 emulator attached to QEMU via `chardev`/`tpm-tis`/`tpm-crb` for testing Measured Boot, PCRs, and TPM-backed device identity |
 | **QCOW2 Backing Images + Snapshots** | Built into `qemu-img` | `GPL-2.0-only` | Instant copy-on-write disk fixtures (clean Windows-like ESP, multi-Linux BLS ESP, corrupt GPT, BitLocker-flagged partition) without mutating golden fixtures |
@@ -24,8 +34,8 @@
   - Runs at **near-native hardware speed** via Apple's Hypervisor.framework (`hvf`)!
   - Ideal inner-loop test target for `sbm-uefi` (`aarch64-unknown-uefi`), `sbm-core` (`aarch64`), and U-Boot `qemu_arm64` UEFI compatibility tests.
 - **x86-64 VMs (`qemu-system-x86_64 -M q35 -accel tcg`):**
-  - Runs via QEMU TCG software emulation on Apple Silicon (~5–15× slower than KVM/HVF, completely fine for booting `sbm-uefi` in 2–4 seconds; slower for full GUI `sbm-core` boot, so use `-nographic` / serial assertions or lightweight scenarios locally and full KVM on x86 Linux CI).
-- **Local Prerequisites Not Yet Installed on Dev Mac:** Verified during environment inspection (`2026-11-26`) that `qemu-system-x86_64`, `qemu-system-aarch64`, and `swtpm` are not yet installed via Homebrew (`brew install qemu swtpm` will provision them cleanly for Agent 3 / `sbm-lab`).
+  - This QEMU binary has no HVF accelerator for x86. One smoke run reached `efi-launched` in 2188 ms. That is one TCG sample, not a ratio against KVM or HVF, and not a `sbm-core` GUI boot.
+- **Tools on the dev Mac:** QEMU 11.1.3 and swtpm 0.10.2 are installed. The earlier note that they were missing is out of date.
 
 ### On GitHub Actions CI
 - **`ubuntu-latest` (x86-64):** Supports nested KVM on supported runner classes (and fast TCG fallback for UEFI boot smoke tests). Runs `x86_64` OVMF + `sbm-uefi` + `sbm-core` integration tests.
