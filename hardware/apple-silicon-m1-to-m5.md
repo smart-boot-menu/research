@@ -1,102 +1,109 @@
-# Apple Silicon Architecture, Boot Chain & M1–M5 Support Study
+# Apple Silicon Architecture, Boot Chain, and M1–M5 Support
 
-**Last verified:** 2026-11-26  
-**Primary Sources:**
-- Asahi Linux Feature Support Docs: `https://github.com/AsahiLinux/docs` (`m3.md`, `m4.md`, `m5.md`, `soc-codenames.md`)
-- Asahi Linux Blog ("M2: Episode 1 — Asahi Linux on M3", Sep 2026): `https://asahilinux.org/2026/09/m2-episode-1/`
-- `AsahiLinux/m1n1`: `https://github.com/AsahiLinux/m1n1`
-- `AsahiLinux/u-boot` (`asahi` & `asahi-releng` branches, U-Boot `v2026.07` base): `https://github.com/AsahiLinux/u-boot`
-- Apple Platform Security Guide: `https://support.apple.com/guide/security/` (Boot process for a Mac with Apple silicon, LocalPolicy, Startup Disk security policy, Paired recoveryOS)
-- macOS 27.3 Golden Gate Beta Release Notes (`FB23916610`, Nov 2026)
+**Last verified:** 2026-11-26
 
----
+This note corrects the 2026-11-26 draft against the pages and commits fetched that day. Support for one M-series generation is not evidence for another. `linux-asahi (7.5)` is Asahi's label for a feature that is available in the `linux-asahi` tree and expected to land upstream by 7.5. It is not a kernel tag. `git ls-remote --tags` on `AsahiLinux/linux` the same day showed `v7.3.4` (`7595a62d45ee1a2297eafa5f2ef5d0a45142d84d`) as the newest `v7.*` tag, and no `v7.4` or `v7.5` tag.
 
-## 1. Fundamental Reality: Apple Silicon Is NOT a Conventional UEFI Platform
+## Sources
 
-Apple Silicon Macs do **not** boot UEFI firmware from SPI flash. Their hardware-enforced chain of trust is:
+- Asahi feature tables, fetched 2026-11-26: [M1](https://asahilinux.org/docs/platform/feature-support/m1/), [M2](https://asahilinux.org/docs/platform/feature-support/m2/), [M3](https://asahilinux.org/docs/platform/feature-support/m3/), [M4](https://asahilinux.org/docs/platform/feature-support/m4/), [M5](https://asahilinux.org/docs/platform/feature-support/m5/). Each page defines `linux-asahi`, `linux-asahi (release)`, `WIP`, and `TBA`.
+- Asahi device list: <https://asahilinux.org/docs/hw/devices/device-list/>
+- [Platform quirks](https://asahilinux.org/docs/platform/quirks/), [boot process](https://asahilinux.org/docs/alt/boot-process-guide/), [U-Boot](https://asahilinux.org/docs/sw/u-boot/), [FAQ](https://asahilinux.org/docs/project/faq/)
+- Pinned Asahi U-Boot `asahi-releng` `ec49c9d70e6ab003813d6f475fec62dc1c0f4bfe`, `configs/apple_m1_defconfig` and `lib/efi_loader/Kconfig`
+- Pinned asahi-installer `0259acb983e77b1499629c62f96cc690fb8aa9cd`, `src/step2/step2.sh`
+- Pinned tags in `sbm-as/config/pins.env`: m1n1 `v2.0.1` (`5e3a756398bfe50189a1018ff2b876d61d395c08`), linux-asahi `v7.3.4`
+- Apple Platform Security guide (boot process, LocalPolicy, paired recoveryOS, startup-disk policy): <https://support.apple.com/guide/security/>
+- OpenBSD/arm64 platform page: <https://www.openbsd.org/arm64.html>
 
-1. **Boot ROM** (immutable on-SoC silicon) -> verifies and loads **LLB** (Low-Level Bootloader) + **iBoot1** from internal NOR/NVMe (`iSCPreboot`).
-2. **LLB** verifies system-paired firmware (storage, display, SMC, Thunderbolt) and validates a **Secure Enclave-signed `LocalPolicy`** per installed OS volume (protected with anti-replay counters in Secure Storage).
-3. **iBoot2 (mBoot)** loads the OS boot object from the APFS Preboot container:
-   - In **Full Security** (default for macOS): requires personalized Apple ECID-bound signatures.
-   - In **Reduced Security**: allows global Apple signatures and AuxKC kexts.
-   - In **Permissive Security** (only configurable in **1TR — One True Recovery**, entered by physically holding the power button, using `bputil`/`kmutil` with owner authentication): allows iBoot to boot a **Custom Boot Object** (an unsigned Mach-O payload blessed via `bputil -k`, specifically **`m1n1`**).
-4. **Critical Safety Invariants for SBM:**
-   - macOS **cannot** modify `LocalPolicy` or enroll a custom boot object from a normal running OS session; physical presence in 1TR + owner authentication is strictly required by Apple hardware design.
-   - Apple Silicon internal NVMe contains platform-critical APFS containers (**`iSCPreboot`**, **macOS `System`/`Data`/`Preboot`/`Recovery`**, and **System Recovery `RecoveryOS`**). Corrupting or deleting `iSCPreboot` or System Recovery can require a **DFU restore from a second Mac**!
-   - **SBM MUST NEVER** modify or auto-format Apple `iSCPreboot`, `RecoveryOS`, or macOS APFS containers without explicit, multi-step verified procedures (and must block them completely by default in `sbm-core`).
+Third-party M5 GPU blog posts are not support evidence. Apple feedback `FB23916610` was not fetched from developer.apple.com. It is not used here, and it is not a finding about base M5 `T8142`. The development Mac is an M5 MacBook Air on macOS 27.0 (Darwin 27.0.0, build `26A428`).
 
----
+## Corrections to the previous draft
 
-## 2. Core Upstream Projects Evaluated
+1. The custom boot object is `boot.bin`, installed from paired one-true recovery. The pinned `step2.sh` checks that the current recovery is paired to the new volume group and is one-true recovery, then runs `bputil -nc` for that volume group and `kmutil configure-boot --raw` on `boot.bin`. The script tells the user that the macOS installation keeps its own security level. The earlier "unsigned Mach-O via `bputil -k`" description does not match this script. The LocalPolicy record is the SEP-signed, anti-replay object Apple documents. SBM does not run these commands.
+2. Asahi's quirks page says there is no UEFI variable storage, so U-Boot always starts `\EFI\BOOT\BOOTAA64.EFI`. `nvram_writable` stays false on Apple Silicon. A QEMU flash variable that accepts `SetVariable` is a different machine. See the U-Boot EFI evidence note.
+3. m1n1 stage 1 chainloads stage 2 only from the internal NVMe ESP (`/m1n1/boot.bin`). The pinned defconfig's boot command is `bootflow scan -b`. `CONFIG_USE_PREBOOT` is set and no `CONFIG_PREBOOT` string is set, so USB is not started before that scan. Asahi's U-Boot page still documents a manual `run bootcmd_usb0` after interrupting autoboot.
+4. `CONFIG_EFI_LOADER` is not named in the pinned defconfig. Its Kconfig default is `y` for `armv8`, which this Apple config is.
+5. M4 Wi-Fi and Bluetooth are `linux-asahi` on M4 and M4 Pro/Max device rows. They are `TBA` on A18 Pro (`T8140`). DART is `TBA` on every M4-class SoC. The installer column is `no` on every M4-class device.
+6. M3 is not one row. Mac Studio M3 Ultra (`T6032`) installer is `no`. GPU is `WIP` on `T8122` and `TBA` on Pro, Max, and Ultra. USB3 and DCP are `linux-asahi` except Ultra, where both are `WIP`.
+7. Fedora OpenGL and Vulkan version claims are not copied onto M3, M4, or M5. The GPU cell is `linux-asahi` for M1 and M2, `WIP` for M3 base, and `TBA` after that.
+8. The 450–850 MiB and 1.5–2 GiB figures are design targets. This study did not measure an image.
+9. A claim that U-Boot gained `t8122` and `t6032` support in a specific May–September 2026 merge was not checked against the pinned commit and is withdrawn.
+10. M6 appears on Asahi's overview and is outside this matrix.
 
-| Project | Language(s) | License (SPDX) | Maintenance (Nov 2026) | Verdict | Role in SBM |
-|---|---|---|---|---|---|
-| **Asahi Linux (`linux-asahi` + `asahi-installer` + `asahi-scripts` + Mesa AGX/Honeykrisp)** | C, Rust (AGX DRM/kernel driver), Python, Shell | `GPL-2.0-only` (kernel) / `MIT` (installer/scripts/Mesa) | Very active | **Reuse / Build On** | Upstream kernel (`kernel-16k`), firmware extraction (`asahi-fwextract`), and GPU drivers for Apple Silicon `sbm-core` |
-| **`m1n1`** (`AsahiLinux/m1n1`) | C, Python (proxy/tooling) | `MIT` | Very active | **Reuse** | Stage-1/Stage-2 Apple Silicon bootloader & hypervisor booted by iBoot; hands off to Asahi U-Boot |
-| **Asahi U-Boot** (`AsahiLinux/u-boot`, `asahi-releng` branch) | C | `GPL-2.0-or-later` | Very active (`v2026.07` base; Sep 2026 commits for M3 `t8122` & NVMe) | **Reuse** | Provides `CONFIG_EFI_LOADER` UEFI Boot Services (GOP simple framebuffer, NVMe, USB xHCI, ESP detection) to launch the **standard `aarch64-unknown-uefi` `sbm-uefi` binary** |
+## Boot chain
 
-### Why SBM Does NOT Duplicate `sbm-uefi` for Apple Silicon
-Because `m1n1` chainloads **Asahi U-Boot**, and Asahi U-Boot implements UEFI Boot Services (`CONFIG_EFI_LOADER` with GOP framebuffer, keyboard/USB HID, NVMe/USB block I/O, and ESP scanning), **`sbm-as` can boot the exact same `aarch64-unknown-uefi` binary produced by `sbm-uefi`**! `sbm-as` only owns:
-- Apple stub APFS container setup / integration with Asahi's `m1n1` + `u-boot` chain,
-- Apple-specific platform capability quirks (e.g., no persistent UEFI NVRAM writeback — ESP config only; 16 KiB kernel page size requirement; no UEFI Secure Boot `db`/`KEK`),
-- `asahi-fwextract` integration for Wi-Fi/BT/SoC firmware blobs lawfully extracted from the machine's own macOS volume,
-- Apple partition protection guardrails.
+Apple Silicon does not boot a UEFI firmware image from SPI flash. Apple's guide describes Boot ROM, LLB, a per-OS LocalPolicy, and iBoot. Full, Reduced, and Permissive security are per installed OS. Permissive security is available from paired one-true recovery.
 
----
+Asahi's boot guide, for an installed system:
 
-## 3. Verified Apple Silicon Support Matrix (November 2026)
+1. Apple's chain loads m1n1 stage 1. Stage 1 has the ESP PARTUUID from install time and loads `/m1n1/boot.bin` from that ESP on the internal NVMe. External media is not a stage-2 source.
+2. Stage 2 is m1n1 plus the device tree plus U-Boot. It hands the flattened device tree onward.
+3. U-Boot provides UEFI and, in the release configuration, loads `\EFI\BOOT\BOOTAA64.EFI`.
 
-> **Strict Evidence Standard:** Every cell below reflects primary upstream `AsahiLinux/docs` and release notes verified on **2026-11-26**.
+The pinned `apple_m1_defconfig` (the name is historical; `CONFIG_ARCH_APPLE=y` and `CONFIG_OF_UPSTREAM_VENDOR="apple"`) enables `CONFIG_NVME_APPLE`, `CONFIG_USB_XHCI_HCD`, `CONFIG_USB_XHCI_DWC3`, `CONFIG_USB_XHCI_PCI`, `CONFIG_USB_DWC3`, `CONFIG_USB_KEYBOARD`, `CONFIG_APPLE_SPI_KEYB`, `CONFIG_APPLE_MTP_KEYB`, `CONFIG_VIDEO_SIMPLE`, `CONFIG_NO_FB_CLEAR`, and `CONFIG_NO_NET`. It does not enable a USB mouse or trackpad. `CONFIG_NO_NET` means this U-Boot build has no UEFI network protocol.
 
-### SoC Generation Summary
+Asahi's FAQ states that a pure USB boot with no change to internal storage is not available. The internal, Apple-authorized bootstrap is the path that exists. SBM does not bypass that policy.
 
-| Generation | SoC IDs | Official Asahi Installer | Kernel / Boot Status (Nov 2026) | GPU / Display | USB / External Storage | Wi-Fi / BT |
-|---|---|---|---|---|---|---|
-| **M1 Series** | `T8103`, `T6000/1/2` | **Yes (Stable)** | Mature (`linux-asahi` + broad mainline) | **Verified:** AGX + Mesa OpenGL 4.6 / Vulkan 1.4 (Honeykrisp) + DCP | **Verified:** USB2/USB3 + NVMe in U-Boot & Linux | **Verified** |
-| **M2 Series** | `T8112`, `T6020/1/2` | **Yes (Stable)** | Mature (`linux-asahi` + broad mainline) | **Verified:** AGX + Mesa OpenGL / Vulkan + DCP | **Verified:** USB2/USB3 + NVMe in U-Boot & Linux | **Verified** |
-| **M3 Series** | `T8122`, `T6030/1/2/4` | **Yes (Merged Sep 2026)** | **Verified:** Almost full feature parity with M1/M2 (webcam, mics, USB3 10 Gbps, HW video decode incl. AV1, Wi-Fi, BT) | **Partial / WIP:** Boot/DCP works; performant 3D GPU acceleration still in progress | **Verified:** USB2/USB3 in `linux-asahi`; M3 U-Boot `t8122`/`t6032` merged May–Sep 2026 | **Verified** |
-| **M4 Series** | `T8132`, `T6040/41` (+ A18 Pro `T8140`) | **No** | **Early bring-up:** `linux-asahi` (7.4/7.5 target) has AICv3, UART, Watchdog, I²C, GPIO, NVMe, PCIe, PMU WIP | **TBA:** Boot framebuffer only; DCP & GPU `TBA` | **Partial (M4 base only):** USB2/USB3 in `linux-asahi` for M4 `T8132`; M4 Pro/Max `TBA` | **TBA** |
-| **M5 Series** | **`T8142` (M5)**, `T6050` (M5 Pro/Max/Ultra) | **No** | **Very early bring-up (M5 `T8142` only):** `linux-asahi` (7.5 target) has Devicetree, Boot framebuffer (`simpledrm`), internal **NVMe**, **Keyboard** & KB backlight, AICv3, UART, Watchdog, I²C, GPIO; PMU `WIP`. M5 Pro/Max/Ultra (`T6050`) mostly `TBA`. | **Boot framebuffer only** (`linux-asahi` 7.5); DCP & GPU **`TBA`** | **NOT YET SUPPORTED (`TBA`):** USB2, USB3, Thunderbolt, PCIe, and DART are all **`TBA`** on M5 (`T8142` & `T6050`) | **TBA** (Touchpad, Battery, Audio, Brightness, Webcam also `TBA`) |
+## How to read the matrix
 
-### Crucial M5 Firmware Finding (Verified Nov 2026)
-- **Apple `mBoot` Single-Core Bug (`FB23916610`):** Filed by Asahi Linux contributor Yureka. On **M5 Pro, M5 Max, and M5 Ultra**, booting Linux/custom raw boot objects originally exposed only **1 CPU core**.
-- **Resolved in macOS 27.3 Golden Gate Beta** (Beta 1 `26C5035r`, Nov 3, 2026; Beta 2 `26C5047e`, Nov 17, 2026, `mBoot-20457.60.65.0.1`), allowing `m1n1` + Linux to bring up all cores. Crucially, existing Linux stubs must recreate their Preboot restore bundle (`/chosen/firmware-version`) under macOS 27.3+ to inherit the updated stage-2 `mBoot`.
-- **Development Workstation Status (M5 MacBook Air, `T8142`, macOS 27.0 build `26A428`):**
-  - M5 (`T8142`) has early `linux-asahi` bring-up (boot framebuffer, NVMe, keyboard), **NO official Asahi installer**, **NO USB/Thunderbolt/PCIe/DART/Wi-Fi/GPU/Touchpad drivers yet**.
-  - **Therefore:** Physical M5 bare-metal SBM boot is **explicitly out of scope for SBM 0.1** and tracked as an active upstream dependency in `sbm-as`. The M5 MacBook Air serves as a high-speed ARM64 development & QEMU HVF virtualization host without modifying its macOS boot configuration or partitions.
+Cells are transcribed from the feature tables above. A number such as `7.0` means Asahi lists that upstream kernel. `linux-asahi` with no number means Asahi's "available in linux-asahi" cell. `(7.4)` or `(7.5)` is the upstream target in parentheses on that page, not a tag that exists. `Installer: no` means the machine is not an install target, even where a few blocks are marked `linux-asahi`.
 
----
+`external_usb_boot_supported` in `sbm-as` is true only when the installer cell is `yes`, USB3 is published (`Upstream` or `linux-asahi`), and DART is not `WIP` or `TBA`. A lone USB cell is not enough. M4 base is the example: USB3 is `linux-asahi` and DART is `TBA`, so the bit is false. The M4 page's footnote says many peripherals depend on DART and PCIe.
 
-## 4. Key Research Question: Internal Bootstrap -> External Storage OS Boot on Apple Silicon
+`bridge_reachable` is true only when the installer cell is `yes` and NVMe is published. `can_chainload_efi` on the shared capability struct means "if U-Boot is already running." Callers also check `bridge_reachable`.
 
-> *"Can SBM provide an internally installed bootstrap that subsequently allows booting compatible operating systems from external storage?"*
+## M1 (`T8103`, `T6000`/`T6001`/`T6002`)
 
-### Verified Architectural Answer (Distinguishing What Works vs What Is Blocked)
+Installer `yes` on the listed devices. USB3 and DART are upstream (`7.0`, and DART `5.15` on the base SoC / `6.1` on Pro/Max/Ultra). NVMe is upstream `5.19`. GPU, display, keyboard, and touchpad are published on the laptop rows. Thunderbolt PCIe and DisplayPort adaptors are `WIP`. Wi-Fi is upstream `6.1` on the base device rows. The capability bits for external USB and the boot bridge are true.
 
-1. **Why an Internal Stub Is Architecturally Mandatory on Apple Silicon:**
-   - Apple Silicon's hardware Boot ROM / LLB / `LocalPolicy` architecture **does not allow booting arbitrary unsigned Linux/UEFI images directly from a generic external USB drive** the way an x86 PC does.
-   - Apple's built-in external startup disk feature only works for **signed macOS installations** whose ownership and LocalPolicy are blessed through Apple's security model.
-   - Therefore, installing a **tiny internal stub (~500 MB–1 GB APFS stub + small ESP)** containing `m1n1` + `Asahi U-Boot` + `sbm-uefi` (blessed once in 1TR) **IS the exact right architectural design** for booting third-party OSes from external storage!
+## M2 (`T8112`, `T6020`/`T6021`/`T6022`)
 
-2. **What Works TODAY (Verified on M1, M2, and M3):**
-   - Internal `iBoot` -> internal `m1n1` -> internal `Asahi U-Boot` -> `sbm-uefi` (from internal ESP) -> scans **external USB-C (USB2/USB3 xHCI) mass storage**!
-   - U-Boot (`apple_m1_defconfig`) explicitly enables `CONFIG_USB_XHCI_HCD`, `CONFIG_USB_XHCI_DWC3`, `CONFIG_USB_XHCI_PCI`, `CONFIG_USB_DWC3`, and `CONFIG_EFI_LOADER`.
-   - Once `sbm-uefi` loads a `linux-asahi` kernel + initramfs (either from internal ESP or external USB ESP), the Linux kernel mounts the root filesystem from an **external USB-C SSD** reliably on M1, M2, and M3!
-   - Even better: **Multiple Linux distributions** can live on external USB SSDs without consuming internal Mac NVMe space (only the tiny internal bootstrap stub + shared `sbm-core` recovery image needs internal space, or even `sbm-core` itself can live externally!).
+Installer `yes`, except Mac Pro (2023), whose installer cell is `WIP`. USB3 is upstream `7.0`. DART is upstream `6.3` on `T8112` and `6.18` on `T602x`. NVMe is upstream `5.19`. GPU is `linux-asahi`. Thunderbolt PCIe adaptor is `WIP`. Wi-Fi is upstream `6.1` on the base laptop rows and `linux-asahi` on the Pro/Max/Ultra rows. The adapter's Mac Pro (2023) exception sets the installer to `WIP` and clears `bridge_reachable`. Other M2 devices keep both capability bits.
 
-3. **Current Technical Limitations & Blockers (Explicitly Documented):**
-   - **M4 Pro/Max & M5 (`T8142`/`T6050`) Blocker (Nov 2026):** External USB/Thunderbolt boot is **currently impossible on M5** until upstream Asahi Linux lands **DART, PCIe, and USB2/USB3 (`apple-atc` / `dwc3`)** drivers for M5 in `m1n1`, `u-boot`, and `linux-asahi`.
-   - **Thunderbolt PCIe Tunneling (External NVMe over pure TB3/TB4):** Still `WIP` on M3 and `TBA` on M4/M5. Standard **USB 3.2 Gen 2 (10 Gbps) enclosures** (using UASP over xHCI, NOT pure Thunderbolt PCIe tunneling) are vastly more compatible in U-Boot and `linux-asahi` than Thunderbolt-only enclosures!
-   - **macOS Booting from `sbm-uefi` on Apple Silicon:** `sbm-uefi` (running inside `m1n1` -> U-Boot) **cannot directly chainload macOS** because macOS requires Apple's iBoot + signed `LocalPolicy` + paired firmware handoff. Switching back to macOS from SBM on Apple Silicon works by **rebooting with the Apple startup target (or NVRAM `boot-volume` / Apple Startup Picker)** — never by attempting to EFI-chainload `boot.efi`.
-   - **External OS Compatibility:** External OSes booted on Apple Silicon **must** be ARM64 OSes with Apple Silicon 16 KiB page-size kernels + Apple devicetree/drivers (e.g., `linux-asahi` based distros, OpenBSD/arm64 on supported M1/M2 models). Generic ARM64 ACPI-only ISOs (like standard Windows 11 ARM64 or stock generic Linux kernels without Apple DTB/drivers) will NOT boot bare-metal on Apple Silicon without platform driver support.
+## M3 (`T8122`, `T6030`, `T6031`/`T6034`, `T6032`)
 
----
+| | M3 `T8122` | M3 Pro `T6030` | M3 Max `T6031`/`T6034` | M3 Ultra `T6032` |
+|---|---|---|---|---|
+| Installer | yes (iMac, MacBook Pro, MacBook Air rows) | yes (MacBook Pro row) | yes (same Pro/Max row) | no (Mac Studio 2025) |
+| USB3 | linux-asahi | linux-asahi | linux-asahi | WIP |
+| DART | linux-asahi | linux-asahi | linux-asahi | linux-asahi |
+| NVMe | linux-asahi (7.5) | linux-asahi (7.5) | linux-asahi (7.5) | linux-asahi (7.5) |
+| GPU | WIP | TBA | TBA | TBA |
+| DCP | linux-asahi | linux-asahi | linux-asahi | WIP |
+| Thunderbolt PCIe adaptor | WIP | WIP | WIP | WIP |
 
-## 5. Minimal Asahi Core OS Sizing (< 4 GB Goal -> Target < 1 GB)
+External USB and the boot bridge are true for base, Pro, and Max. Both are false for Ultra. The adapter marks the Ultra display cell unpublished because DCP is `WIP` and the Studio main-display cell is empty.
 
-The user rightly observed that `sbm-core` on Apple Silicon must use Asahi's Linux stack and stay compact (under 4 GB). Primary-source analysis shows we can do **even better**:
-- **Asahi is a kernel + bootloader + firmware + Mesa layer, NOT a mandatory 8 GB desktop install.**
-- Using **`mkosi` (v27.1)** with **Fedora Asahi Remix's minimal package repositories** (`kernel-16k` `linux-asahi`, `uboot-asahi`, `m1n1`, `mesa-asahi` when supported on the SoC, `systemd`, `labwc` + XWayland, `gparted`, `partclone`, `cryptsetup`, `sbm-core` Rust daemon/GUI, and selective firmware):
-  - Compressed immutable **EROFS (`zstd`)** rootfs size: **~450–850 MB** (well under **1 GB**, less than one-quarter of the 4 GB budget!).
-  - Combined with the APFS stub container (~500 MB required by Apple macOS Preboot/Recovery stub) + 512 MB ESP, the **entire internal Apple Silicon footprint** stays around **~1.5–2.0 GB total**, leaving internal NVMe free and allowing full RAM-resident recovery execution on 8–64 GB Macs.
+## M4, including A18 Pro
+
+| | A18 Pro `T8140` | M4 `T8132` | M4 Pro/Max `T6040`/`T6041` |
+|---|---|---|---|
+| Installer | no | no | no |
+| USB3 | TBA | linux-asahi | TBA |
+| DART | TBA | TBA | TBA |
+| PCIe | TBA | linux-asahi | linux-asahi |
+| NVMe | linux-asahi | linux-asahi | linux-asahi |
+| GPU / DCP / touchpad | TBA | TBA | TBA |
+| Boot framebuffer | linux-asahi (7.4) | linux-asahi (7.4) | linux-asahi (7.5) on the laptop row |
+| Wi-Fi and Bluetooth | TBA | linux-asahi | linux-asahi |
+
+No M4-class device is an install target. `external_usb_boot_supported` and `bridge_reachable` are false, including `T8132`.
+
+## M5
+
+| | M5 `T8142` (MacBook Air 2026, MacBook Pro 14-inch 2025) | M5 Pro/Max/Ultra column (`T6050`) |
+|---|---|---|
+| Installer | no | no |
+| Devicetree | linux-asahi (7.5) | TBA |
+| Boot framebuffer | linux-asahi (7.5); full display TBA | TBA (laptop rows); desktops have no main-display cell |
+| NVMe | linux-asahi | TBA |
+| Keyboard | linux-asahi | TBA |
+| Keyboard backlight | linux-asahi (7.5) | TBA |
+| USB2, USB3, Thunderbolt, PCIe, DART, GPU, Wi-Fi, Bluetooth, touchpad | TBA | TBA |
+| PMU | WIP | TBA |
+
+`T8142` is not an install target. Both capability bits are false. The device list also uses `T6051` for some M5 Max boards (14-inch and 16-inch MacBook Pro, Mac Studio). The feature table does not give `T6051` its own column; those products sit in the Pro/Max/Ultra device table, which is still `TBA`. The adapter maps `T6051` to that same unpublished profile.
+
+## What SBM reuses
+
+m1n1 and Asahi U-Boot stay upstream. SBM adds a capability adapter, partition protection, and an ESP file for boot policy because UEFI variables are absent. It does not add a second boot manager. The shared `aarch64` UEFI application, once `sbm-uefi` builds one, is the `\EFI\BOOT\BOOTAA64.EFI` payload. The probe in `sbm-as` only checks the protocols that payload needs. See `docs/hardware/apple-silicon-boot-architecture.md` and `apple-silicon-external-boot.md`.

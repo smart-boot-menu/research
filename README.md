@@ -18,7 +18,8 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 
 ### Hardware & Platform Studies (`hardware/`)
 
-- [Apple Silicon Architecture & M1–M5 Support Study](hardware/apple-silicon-m1-to-m5.md) — Asahi Linux, `m1n1`, Asahi U-Boot, Apple `LocalPolicy`/`bputil`/1TR, verified M1/M2/M3/M4/M5 (`T8142`) driver status as of November 2026 (including macOS 27.3 `mBoot` fix `FB23916610`), external startup disk feasibility, and minimal Asahi Core OS sizing.
+- [Apple Silicon Architecture and M1–M5 Support](hardware/apple-silicon-m1-to-m5.md) — feature tables fetched 2026-11-26, corrected boot chain, and per-generation limits. `T8142` is not an install target.
+- [External Boot Feasibility](hardware/apple-silicon-external-boot.md) — six scenarios, split by generation, without treating QEMU or one SoC as evidence for another.
 - [GPUs, Graphics & GUI Frameworks (UEFI vs Linux)](hardware/gpu-and-graphics-acceleration.md) — Integrated/discrete GPU reality vs GUI libraries, `igpu` / `uefi-wm` verification, Slint 1.19.1 `no_std`, egui, Iced, wgpu, Vello, `embedded-graphics`, custom framebuffer rendering, Wayland/XWayland for GTK3 GParted, HiDPI, and low-RAM older laptops.
 
 ### Architecture & Technology Deep Dives (`architecture/`)
@@ -31,6 +32,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 ### Validation Evidence (`validation/`)
 
 - `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs.
+- [U-Boot EFI probe under QEMU virt, 2026-11-26](validation/evidence/sbm-as-uboot-efi-2026-11-26.md) — protocol probe only. QEMU `virt` is not an Apple Silicon Mac.
 - [Debian 13.8.0 arm64 netinst QEMU boot, 2026-11-26](validation/evidence/2026-11-26-debian-13.8.0-arm64-netinst-qemu.md) — one HVF run that reached the GRUB install menu. This is a boot log, not a benchmark.
 
 ## License
