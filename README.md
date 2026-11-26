@@ -34,6 +34,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 ### Validation Evidence (`validation/`)
 
 - `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs.
+- [SBM 0.0.1 integration baseline](validation/evidence/sbm-integration-baseline-2026-11-26.md) — Hosted CI failures, builder evidence, host test counts, and EFI artifact hashes.
 - [U-Boot EFI probe under QEMU virt, 2026-11-26](validation/evidence/sbm-as-uboot-efi-2026-11-26.md) — protocol probe only. QEMU `virt` is not an Apple Silicon Mac.
 - [Debian 13.8.0 arm64 netinst QEMU boot, 2026-11-26](validation/evidence/2026-11-26-debian-13.8.0-arm64-netinst-qemu.md) — one HVF run that reached the GRUB install menu. This is a boot log, not a benchmark.
 - [sbm-server release timings, 2026-11-26](validation/evidence/sbm-server-2026-11-26.md) — one cold start and N=10 warm starts plus health and boot-policy requests on the development Mac. These are not UEFI frame times.
