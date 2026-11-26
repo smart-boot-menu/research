@@ -35,6 +35,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 
 - `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs.
 - [SBM 0.0.1 integration baseline](validation/evidence/sbm-integration-baseline-2026-11-26.md) — Hosted CI failures, builder evidence, host test counts, and EFI artifact hashes.
+- [SBM 0.0.1 Wave 2 integration audit evidence](validation/evidence/sbm-integration-wave2-2026-11-26.md) — Wave 2 commits, candidate image provenance, UEFI O(N²) FAT32 hashing breakdown, hosted CI failure root causes, Core graphical boot blockers, and shared resource manager audit.
 - [U-Boot EFI probe under QEMU virt, 2026-11-26](validation/evidence/sbm-as-uboot-efi-2026-11-26.md) — protocol probe only. QEMU `virt` is not an Apple Silicon Mac.
 - [Debian 13.8.0 arm64 netinst QEMU boot, 2026-11-26](validation/evidence/2026-11-26-debian-13.8.0-arm64-netinst-qemu.md) — one HVF run that reached the GRUB install menu. This is a boot log, not a benchmark.
 - [openSUSE Leap 16.1 aarch64 online installer QEMU boot, 2026-11-26](validation/evidence/2026-11-26-opensuse-leap-16.1-aarch64-qemu.md) — one HVF run. GRUB showed the Leap installer, then the guest kernel started unpacking an initramfs. No disk was attached.
