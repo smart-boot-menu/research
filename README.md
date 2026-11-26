@@ -12,6 +12,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 
 - [Boot Management Ecosystem](ecosystem/boot-management.md) — rEFInd, RefindPlus, Meridian, Visor, GRUB 2, systemd-boot, Limine, Clover, OpenCore, iPXE, U-Boot, EDK2, Petitboot, LinuxBoot, u-root, and modern Rust UEFI projects (`uefi-rs`, `r-efi`, `crdyboot`, `oreboot`, Patina, Redox bootloader).
 - [OS Installation & Bare-Metal Provisioning](ecosystem/os-provisioning.md) — PINN, NOOBS, Ventoy, iVentoy, netboot.xyz, MAAS, Tinkerbell, FOG Project, OpenStack Ironic, Foreman, Calamares, `bootc`/`ostree`, `systemd-repart`, `wimlib`, `osinfo-db`, Agama, and cross-OS (Windows/Linux/BSD) installation mechanics from Linux.
+- [Installer mechanisms for the OS catalog](ecosystem/installer-mechanisms.md) — which of those mechanisms, plus Ubuntu autoinstall, Debian preseed, Kickstart, archinstall, NixOS, Windows Setup, WinPE, and FreeBSD, are stable enough to record in `sbm-catalog` without executing them.
 - [Recovery & Storage Ecosystem](ecosystem/recovery-and-storage.md) — GParted / GParted Live, SystemRescue, Rescuezilla, Clonezilla, Partclone, GNU Parted, `util-linux`, TestDisk/PhotoRec, GNU `ddrescue`, ZFSBootMenu, Parted Magic, BootIt UEFI, `cryptsetup` (LUKS2 + BitLocker `bitlk`), LVM/RAID/Btrfs/ZFS, and Rust storage crates.
 - [Remote Management & Out-of-Band Ecosystem](ecosystem/remote-management.md) — RustDesk, noVNC, MeshCentral, Tailscale, Headscale, WireGuard (`boringtun`/`gotatun`), Iroh, JetKVM, PiKVM, Intel AMT / Device Management Toolkit, DMTF Redfish, IPMI, and emerging Rust remote/KVM stacks.
 
@@ -29,7 +30,8 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 
 ### Validation Evidence (`validation/`)
 
-- `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs (initially empty; populated as `sbm-lab` and hardware agents run real measurements).
+- `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs.
+- [Debian 13.8.0 arm64 netinst QEMU boot, 2026-11-26](validation/evidence/2026-11-26-debian-13.8.0-arm64-netinst-qemu.md) — one HVF run that reached the GRUB install menu. This is a boot log, not a benchmark.
 
 ## License
 
