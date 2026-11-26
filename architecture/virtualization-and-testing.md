@@ -10,7 +10,7 @@ These are the facts the lab actually observed. Measured timings are in [sbm-lab-
 - Homebrew QEMU is emulator version 11.1.3. `qemu-system-aarch64 -accel help` lists `hvf` and `tcg`. `qemu-system-x86_64 -accel help` lists only `tcg`. HVF is not an x86 accelerator on this Mac.
 - The firmware banner that booted is `edk2-stable202408-prebuilt.qemu.org`. ADR-008 names `edk2-stable202611`. The lab records the banner it sees and does not claim the ADR pin until that string is observed.
 - swtpm is TPM emulator version 0.10.2.
-- U-Boot `v2026.10` `qemu_arm64` builds with `CONFIG_EFI_LOADER=y`. The separate Apple Silicon probe in `sbm-as` passed under TCG after HVF aborted. That log is [sbm-as-uboot-efi-2026-11-26.md](../validation/evidence/sbm-as-uboot-efi-2026-11-26.md). QEMU `virt` is not an Apple Silicon Mac.
+- U-Boot `v2026.10` `qemu_arm64` builds with `CONFIG_EFI_LOADER=y`. QEMU 11.1.3 HVF aborts in `hvf_handle_exception` (`hvf.c:2447`) before that binary prints a banner. `sbm-lab` profile `uboot-efi` uses TCG, and one TCG run started the lab probe (`efi-launched` at 2743 ms). The separate Apple Silicon probe log is [sbm-as-uboot-efi-2026-11-26.md](../validation/evidence/sbm-as-uboot-efi-2026-11-26.md). QEMU `virt` is not an Apple Silicon Mac.
 - A 10-run aarch64 HVF sample of host milliseconds until `efi-launched` has min 5508, p50 5525, p95 5812, and max 5812. It is not a physical-hardware measurement.
 
 ---
