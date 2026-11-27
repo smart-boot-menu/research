@@ -131,3 +131,65 @@ The following low-risk, non-architectural fixes were committed and pushed withou
 - `sbm-core/build/images/sbm-core-{arm64,x86-64}-software.raw` (**2.56 GiB**) — confirm unused by Agent 13 before pruning.
 - `sbm-lab/var/runs/*` excluding Agent 13's 5 `int-*` dirs (**251 MiB**).
 - Per-repo Cargo `target/` consolidation via Cargo 1.100 `build.build-dir` + `sccache` (currently **15.14 GiB** across 8 repos).
+
+---
+
+## 8. Track B Implementation Benchmarks (2026-11-26)
+
+All measurements below were captured on the same 16 GiB Apple M5 MacBook Air (`aarch64`, 10 CPUs, macOS Darwin 27.0.0, `rustc`/`cargo` `1.100.0`) after user approval of the Track B roadmap.
+
+### 8.1 Cargo Build-Dir Isolation, `sccache`, `cargo-nextest`, and `cargo-zigbuild`
+
+1. **Cargo `1.100.0` `build.build-dir` isolation:**
+   - Verified `CARGO_BUILD_BUILD_DIR="{cargo-cache-home}/build/{workspace-path-hash}"` on `sbm-common` (`~/.cargo/build/<hash>/...`). Eliminates per-repo `target/` tree clutter without the cross-worktree lock contention of an unhashed shared `CARGO_TARGET_DIR` (`cargo#17312`).
+2. **`sccache 0.20.1` (`SCCACHE_ALLOW_INCREMENTAL=1`, scratch `CARGO_TARGET_DIR`, `cargo test --offline --no-run`):**
+
+   | Run | Repo | Wall (s) | Cache Hit Rate | Non-Cacheable Calls | Cache Size |
+   |---|---|---:|---:|---:|---:|
+   | `server-plain` | `sbm-server` (422 crates) | `25.85` | — | — | — |
+   | `server-sc-cold` | `sbm-server` (cold) | `32.89` (`+27%`) | `0.00%` (752 miss) | 76 (35 bin, 20 proc-macro, 11 incr) | 235 MiB |
+   | `server-sc-warm` | `sbm-server` (fresh target) | `19.64` (`-24%`) | `85.51%` (643 hit / 109 miss) | 76 | 328 MiB |
+   | `core-plain` | `sbm-core` (392 crates) | `14.86` | — | — | — |
+   | `core-sc-xrepo` | `sbm-core` (after `sbm-server`) | `19.15` (`+29%`) | `13.84%` (22 hit / 137 miss) | 46 (22 bin, 9 proc-macro, 10 incr) | 519 MiB |
+
+   - **Verdict:** Do **not** enable `sccache` globally on single-worktree macOS laptops (27–29% slower on cold/cross-repo builds, +519 MiB SSD). Recommend opt-in only for CI or repeated fresh worktrees of `sbm-server`.
+
+3. **`cargo-nextest 0.9.152` vs `cargo test`:**
+   - Fixed a cross-process race on `install/crates/sbm-exec/tests/e2e.rs` `shared_media()` (`install` commit `b11c427`).
+   - `install` (61 tests across 3 heavy integration binaries):
+     - Baseline `cargo test`: **`85.05 s`** wall (`231.5 s` user, `56.4 s` sys).
+     - Warm `cargo test`: **`80.43 s`** wall (`241.3 s` user, `55.6 s` sys).
+     - Warm `cargo nextest run`: **`46.33 s`** wall (`262.0 s` user, `24.8 s` sys) — **1.84× faster** (`-45.5%` wall time, `-56%` sys CPU).
+   - `sbm-lab` (52 tests): `3.62 s` (`cargo test`) -> **`3.26 s`** (`cargo nextest`, `-10%`).
+   - **Verdict:** Adopted in `sbm/justfile` (`just test install` uses `cargo nextest run` when installed).
+
+4. **`cargo-zigbuild 0.24.1` (`zig 0.17.1`, `sbm-cored`, target `aarch64-unknown-linux-gnu` on macOS):**
+   - Cold build: **`9.14 s`** wall (`262 MiB` target dir, `0 MiB` VM RAM).
+   - Warm incremental rebuild (touch `sbm-cored.rs`): **`0.50 s`** wall (`0.18 s` Cargo compile, `0 MiB` VM RAM) — valid `ELF 64-bit LSB pie executable, ARM aarch64`.
+   - **Verdict:** Adopted in `sbm/justfile` (`just core-zigbuild`) for fast zero-VM iteration on pure-Rust Linux binaries (`sbm-cored`, `sbm-runtime`).
+
+### 8.2 Lima `2.3.0` + `krunkit 1.3.2` (`libkrun 1.19.8`) vs QEMU HVF Builder
+
+Both builders ran sequentially under `sbm-lab resources` admission with identical guest specs: **Fedora 45 `aarch64` (`7.2.11-300.fc45.aarch64`), `4096 MiB` RAM, `2` vCPUs**. Allocation test: `dd if=/dev/urandom of=/tmp/fill.bin bs=1M count=1024 && sync`, followed by `rm -f /tmp/fill.bin && sync && echo 3 > /proc/sys/vm/drop_caches`.
+
+| Metric | QEMU HVF (`start-builder.sh`) | Lima `2.3.0` + `krunkit 1.3.2` (`libkrun 1.19.8`) |
+|---|---:|---:|
+| Cold creation + first boot | — (existing disk) | `23.11 s` (from local Fedora 45 qcow2) |
+| Warm boot-to-SSH | `16.32 s` | **`8.83 s`** (`1.85×` faster) |
+| Clean stop | `1.14 s` | **`0.90 s`** |
+| Host process mem / RSS (idle) | `1242 MiB` / `1257 MiB` | **`1151 MiB`** / `1159 MiB` |
+| Host process mem / RSS (`alloc_1024m`) | `2140 MiB` / `2155 MiB` | `2010 MiB` / `2006 MiB` |
+| Host process mem / RSS (`after_free_16s`) | `2150 MiB` / `2166 MiB` (**0 MiB reclaimed**) | `2018 MiB` / `2013 MiB` (**0 MiB reclaimed**) |
+| Post-`dnf`+`cargo` mem (`post_cargo` -> `post_clean_6s`) | — | `3782 MiB` -> `3756 MiB` (`free_pct`: `54%` -> `55%`, `comp`: `4721` -> `4625 MiB`) |
+| Source sync (noop) | `0.20 s` (`rsync`) | **`0.00 s`** (`virtiofs`) |
+| Warm incremental `cargo build -p sbm-cored` | `0.31 s` (local disk) | `0.31 s` (`virtiofs` src, local target) |
+| Guest `fstrim` & `unshare -r` (`mkosi` prereq) | Both work (`-3.63 GiB` trimmed) | Both work (`22.6 GiB` / `2.4 GiB` trimmed; `1.3 GiB` allocated) |
+| `sbm-lab resources` integration | Native in `start-builder.sh` | Requires external wrapper |
+| Read-only host mount enforcement | N/A (`rsync`) | Not enforced by `krunkit` `virtiofs` |
+
+**Root Cause & Migration Decision:** Although Homebrew ships `libkrun 1.19.8` (which implements `MADV_FREE` + 2 MiB Replace-mode reclaim) and Fedora loads `virtio_balloon`, inspecting the live `krunkit` command line confirmed that **`lima 2.3.0` + `krunkit 1.3.2` do not attach a `virtio-balloon` device yet** (tracked upstream in `krunkit#121`). Consequently, `krunkit` reclaimed effectively **0 MiB** of freed guest RAM on macOS, matching QEMU HVF. Per the migration criterion (*"Only migrate if it demonstrates meaningful improvements"*), **full builder migration is deferred until `krunkit#121` wires balloon reclaim**. The hardened QEMU HVF builder (`start-builder.sh`) remains the default for `mkosi` builds, while host `cargo-zigbuild` handles zero-VM Rust daemon iteration and QEMU remains the firmware test backend.
+
+### 8.3 `sbm-lab` GPT/FAT Consolidation & `os-autoinst` Linux CI Prototype
+
+- **GPT/FAT consolidation (`sbm-lab` commit `0794b0c`):** Replaced `sbm-lab`'s duplicated `gpt.rs` and `fatimg.rs` with thin adapters delegating to `install/crates/sbm-media` (`b11c427`), removing direct `crc32fast` and `fatfs` dependencies (**net −269 LOC**) and eliminating `~1.5 GiB` of peak heap copying during `integration.rs` `inspect_overlay_esp`. Verified green in hosted Linux CI (`https://github.com/smart-boot-menu/sbm-lab/actions/runs/45946390386`, `1m 45s`).
+- **`os-autoinst` Linux KVM CI prototype (`sbm-lab` commits `142a0bb`, `c3448d9`):** Added `prototypes/os-autoinst/` and `.github/workflows/os-autoinst-prototype.yml` running `registry.opensuse.org/devel/openqa/containers/isotovideo:qemu-kvm` on free `ubuntu-latest` KVM runners against the tiny `efi-probe` UEFI binary (`NICTYPE=user`, `NICTYPE_USER_OPTIONS=restrict=on`, offline). Verified green end-to-end (`https://github.com/smart-boot-menu/sbm-lab/actions/runs/45946390417`, **`1m 14s`**). Existing `sbm-lab` test tiers remain preserved.
