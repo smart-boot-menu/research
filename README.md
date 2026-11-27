@@ -15,6 +15,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 - [Installer mechanisms for the OS catalog](ecosystem/installer-mechanisms.md) — which of those mechanisms, plus Ubuntu autoinstall, Debian preseed, Kickstart, archinstall, NixOS, Windows Setup, WinPE, and FreeBSD, are stable enough to record in `sbm-catalog` without executing them.
 - [Recovery & Storage Ecosystem](ecosystem/recovery-and-storage.md) — GParted / GParted Live, SystemRescue, Rescuezilla, Clonezilla, Partclone, GNU Parted, `util-linux`, TestDisk/PhotoRec, GNU `ddrescue`, ZFSBootMenu, Parted Magic, BootIt UEFI, `cryptsetup` (LUKS2 + BitLocker `bitlk`), LVM/RAID/Btrfs/ZFS, and Rust storage crates.
 - [Remote Management & Out-of-Band Ecosystem](ecosystem/remote-management.md) — RustDesk, noVNC, MeshCentral, Tailscale, Headscale, WireGuard (`boringtun`/`gotatun`), Iroh, JetKVM, PiKVM, Intel AMT / Device Management Toolkit, DMTF Redfish, IPMI, and emerging Rust remote/KVM stacks.
+- [Development Infrastructure, Testing & Tooling Landscape (Build vs. Reuse Audit)](ecosystem/dev-infrastructure-and-testing-landscape-2026-11-26.md) — primary-source evaluation of EDK II `EmulatorPkg`, Intel `EfiWrapper`, U-Boot `sandbox`, `openQA`/`os-autoinst`, `labgrid`, `test-foundry`, `virtme-ng`, `Lima`, `vfkit`, `libkrun`/`krunkit`, `mkosi`, `systemd-sysext`, `sccache`, `cargo-zigbuild`, Cargo 1.100 `build-dir`, and a module-by-module audit of `sbm-lab` (9,805 LOC).
 
 ### Hardware & Platform Studies (`hardware/`)
 
@@ -34,6 +35,7 @@ Modeled after dedicated research repositories (`0SFS/research`), this repository
 ### Validation Evidence (`validation/`)
 
 - `validation/evidence/` — Retained empirical test results, benchmark measurements, and hardware probe logs.
+- [SBM Developer Resource Audit & QEMU HVF Measurements (2026-11-26)](validation/evidence/sbm-dev-resource-audit-2026-11-26.md) — Phase 1 host & workspace storage audit (54.53 GiB baseline, 10.05 GiB duplicates), build/test latencies, Phase 6 QEMU HVF `virtio-balloon` vs `discard=unmap` + `fstrim` benchmarks, and 13.24 GiB measured SSD reclamation.
 - [SBM 0.0.1 integration baseline](validation/evidence/sbm-integration-baseline-2026-11-26.md) — Hosted CI failures, builder evidence, host test counts, and EFI artifact hashes.
 - [SBM 0.0.1 Wave 2 integration audit evidence](validation/evidence/sbm-integration-wave2-2026-11-26.md) — Wave 2 commits, candidate image provenance, UEFI O(N²) FAT32 hashing breakdown, hosted CI failure root causes, Core graphical boot blockers, and shared resource manager audit.
 - [U-Boot EFI probe under QEMU virt, 2026-11-26](validation/evidence/sbm-as-uboot-efi-2026-11-26.md) — protocol probe only. QEMU `virt` is not an Apple Silicon Mac.
