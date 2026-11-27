@@ -1,0 +1,1223 @@
+{
+  "schema": "sbm.qualification.v1",
+  "release": "0.0.1",
+  "date": "2026-11-27",
+  "arch": "x86_64",
+  "trust_tier": "development_preview",
+  "production_secure_boot_claimed": false,
+  "production_tuf_signed": false,
+  "dualarch_status": "optional_experimental_non_gating",
+  "frozen_commits": {
+    "sbm-common": "abe3029c831f05d77d10cfb214a0c236903d00d9",
+    "sbm-uefi": "4bfb3ba6457a4f6625d13c6a1435f69f15b8d011",
+    "sbm-core": "960f11a5e748e30f105cd79cc648f0633af63138",
+    "install": "870069dccd2b7fc680a35955c27a6481bb46a0e4",
+    "sbm-lab": "5ab4f8c0485a226fc639778a65a8a1467c352bde",
+    "sbm-as": "759be4eabed0cb760eabe5d8befcbba43fe067c6",
+    "sbm-server": "ae18f7832faae6a8b2ad7de709c0ebc733a73531"
+  },
+  "hosted_ci": {
+    "sbm-common": {
+      "run_id": 45958218582,
+      "commit": "abe3029c831f05d77d10cfb214a0c236903d00d9",
+      "conclusion": "success"
+    },
+    "sbm-uefi": {
+      "run_id": 45980442284,
+      "commit": "4bfb3ba6457a4f6625d13c6a1435f69f15b8d011",
+      "conclusion": "success"
+    },
+    "sbm-core": {
+      "run_id": 45977817124,
+      "commit": "960f11a5e748e30f105cd79cc648f0633af63138",
+      "conclusion": "success"
+    },
+    "install": {
+      "run_id": 46014761860,
+      "commit": "870069dccd2b7fc680a35955c27a6481bb46a0e4",
+      "conclusion": "success"
+    },
+    "sbm-lab": {
+      "run_id": 46059331789,
+      "commit": "5ab4f8c0485a226fc639778a65a8a1467c352bde",
+      "conclusion": "success"
+    },
+    "sbm-as": {
+      "run_id": 45977832267,
+      "commit": "759be4eabed0cb760eabe5d8befcbba43fe067c6",
+      "conclusion": "success"
+    },
+    "sbm-server": {
+      "run_id": 45940770054,
+      "commit": "ae18f7832faae6a8b2ad7de709c0ebc733a73531",
+      "conclusion": "success"
+    }
+  },
+  "artifacts": {
+    "raw_filename": "sbm-0.0.1-uefi-x86_64.raw",
+    "raw_bytes": 1120927744,
+    "raw_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+    "zst_filename": "sbm-0.0.1-uefi-x86_64.raw.zst",
+    "zst_bytes": 896237084,
+    "zst_sha256": "4f825fc1eaedebe6cf2436a3ea33613c4be9879e7e950de313d11e115a23381e",
+    "manifest_sha256": "af26a50775ee6c0a6ea79099683cc1a2e79773734c3c73ae413eb82946dec70d",
+    "receipt_sha256": "be7d18e715e8f1127106bd1a5eb829f0177c6d80d9a5e97227713c82be8d57ef",
+    "lockfile_sha256": "a88928d218afc2785dfecf0765b4cf7f3b8920948de0d1accb13be3a92eed213"
+  },
+  "release_manifest": {
+    "schema_version": "1.1",
+    "release_version": "0.0.1",
+    "channel": "beta",
+    "published_at_unix": 1795651200,
+    "git_commit": "870069dccd2b7fc680a35955c27a6481bb46a0e4",
+    "minimum_protocol_major": 1,
+    "minimum_protocol_minor": 0,
+    "artifacts": [
+      {
+        "component": "sbm-uefi",
+        "arch": "x86_64",
+        "platform": "uefi-native",
+        "filename": "sbm-uefi-x86_64.efi",
+        "size_bytes": 465920,
+        "sha256": "729ef70a39d016c00cf70a9a750632dfde5c00617af444aa41db9ccee48948a3",
+        "sbat_generation": 1
+      },
+      {
+        "component": "sbm-core-uki",
+        "arch": "x86_64",
+        "platform": "uefi-native",
+        "filename": "sbm-core-x86_64.efi",
+        "size_bytes": 80909144,
+        "sha256": "5b470091531e2196cb35de3fcc86f040ef56c8d774fecaafc152126a0593672c",
+        "sbat_generation": 1
+      }
+    ],
+    "media": [
+      {
+        "filename": "sbm-0.0.1-uefi-x86_64.raw",
+        "size_bytes": 1120927744,
+        "sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+        "architectures": [
+          "x86_64"
+        ]
+      },
+      {
+        "filename": "sbm-0.0.1-uefi-x86_64.raw.zst",
+        "size_bytes": 896237084,
+        "sha256": "4f825fc1eaedebe6cf2436a3ea33613c4be9879e7e950de313d11e115a23381e",
+        "architectures": [
+          "x86_64"
+        ]
+      }
+    ]
+  },
+  "build_receipt": {
+    "schema": "sbm-install.build-receipt.v1",
+    "release_version": "0.0.1",
+    "channel": "beta",
+    "candidate": "release",
+    "profile": "offline-full",
+    "target": "x86_64",
+    "architectures": [
+      "x86_64"
+    ],
+    "experimental": false,
+    "source_date_epoch": 1795651200,
+    "git_commit": "870069dccd2b7fc680a35955c27a6481bb46a0e4",
+    "sbm_common_revision": "abe3029c831f05d77d10cfb214a0c236903d00d9",
+    "lock_sha256": "a88928d218afc2785dfecf0765b4cf7f3b8920948de0d1accb13be3a92eed213",
+    "release_manifest_filename": "release-manifest.v1.json",
+    "release_manifest_sha256": "af26a50775ee6c0a6ea79099683cc1a2e79773734c3c73ae413eb82946dec70d",
+    "tool": {
+      "name": "sbm-install",
+      "version": "0.0.1",
+      "rustc_version": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+      "build_target": "aarch64-apple-darwin",
+      "zstd_library": "1.6.0",
+      "zstd_level": 9,
+      "compressed": true
+    },
+    "trust_boundary": {
+      "release_signing_status": "unsigned-local-assembly",
+      "production_tuf_signed": false,
+      "secure_boot_production_claimed": false,
+      "note": "Unsigned local assembly or development-key TUF signing is NOT production trust. PE Authenticode presence alone never proves production Secure Boot support."
+    },
+    "commands": {
+      "build": "sbm-install media build --lock media/0.0.1.lock.toml --arch x86_64 --profile offline-full --out-dir <OUT_DIR> --git-commit 870069dccd2b7fc680a35955c27a6481bb46a0e4 --zstd-level 9",
+      "verify": "sbm-install media verify <OUT_DIR>/sbm-0.0.1-uefi-x86_64.raw --arch x86_64 --expect release --sidecar <OUT_DIR>/sbm-0.0.1-uefi-x86_64.raw.sha256 --release-manifest <OUT_DIR>/release-manifest.v1.json"
+    },
+    "components": [
+      {
+        "role": "menu",
+        "arch": "x86_64",
+        "source": "smart-boot-menu/sbm-uefi",
+        "revision": "4bfb3ba6457a4f6625d13c6a1435f69f15b8d011",
+        "version": "0.1.0",
+        "sha256": "729ef70a39d016c00cf70a9a750632dfde5c00617af444aa41db9ccee48948a3",
+        "fixture": false,
+        "sbat_generation": 1,
+        "sbat_entries": [
+          {
+            "component": "sbat",
+            "generation": 1,
+            "vendor_name": "SBAT Version",
+            "vendor_package_name": "sbat",
+            "vendor_version": "1",
+            "vendor_url": "https://github.com/rhboot/shim/blob/main/SBAT.md"
+          },
+          {
+            "component": "sbm",
+            "generation": 1,
+            "vendor_name": "Smart Boot Menu",
+            "vendor_package_name": "sbm",
+            "vendor_version": "1",
+            "vendor_url": "https://github.com/smart-boot-menu/sbm-uefi"
+          }
+        ],
+        "authenticode_present": false,
+        "secure_boot_trust": "unsigned",
+        "production_secure_boot_claimed": false
+      },
+      {
+        "role": "core",
+        "arch": "x86_64",
+        "source": "smart-boot-menu/sbm-core",
+        "revision": "960f11a5e748e30f105cd79cc648f0633af63138",
+        "version": "0.1.0",
+        "sha256": "05cd737e76fa9cf9862e7bb679669c15e69a282da538bda772c4f3406a73297d",
+        "fixture": false,
+        "uki_sha256": "5b470091531e2196cb35de3fcc86f040ef56c8d774fecaafc152126a0593672c",
+        "roothash": "081f2d35cbf028fd6769e565782101556303447414aed0e20ed34b26996f366e",
+        "sbat_generation": 1,
+        "sbat_entries": [
+          {
+            "component": "sbat",
+            "generation": 1,
+            "vendor_name": "SBAT Version",
+            "vendor_package_name": "sbat",
+            "vendor_version": "1",
+            "vendor_url": "https://github.com/rhboot/shim/blob/main/SBAT.md"
+          },
+          {
+            "component": "systemd-stub",
+            "generation": 1,
+            "vendor_name": "The systemd Developers",
+            "vendor_package_name": "systemd",
+            "vendor_version": "262",
+            "vendor_url": "https://systemd.io/"
+          },
+          {
+            "component": "systemd-stub.fedora",
+            "generation": 1,
+            "vendor_name": "Fedora Linux",
+            "vendor_package_name": "systemd",
+            "vendor_version": "262.1-1.fc45",
+            "vendor_url": "https://bugzilla.redhat.com/"
+          },
+          {
+            "component": "kernel.fedora",
+            "generation": 1,
+            "vendor_name": "Red Hat",
+            "vendor_package_name": "kernel-core",
+            "vendor_version": "7.3.4-300.fc45.x86_64",
+            "vendor_url": "mailto:secalert@redhat.com"
+          },
+          {
+            "component": "uki",
+            "generation": 1,
+            "vendor_name": "UKI",
+            "vendor_package_name": "uki",
+            "vendor_version": "1",
+            "vendor_url": "https://uapi-group.org/specifications/specs/unified_kernel_image/"
+          }
+        ],
+        "authenticode_present": true,
+        "secure_boot_trust": "unverified-signature-present",
+        "production_secure_boot_claimed": false,
+        "package_provenance": {
+          "manifest_filename": "sbm-core-x86-64.manifest",
+          "manifest_sha256": "d149b789ba901791330b6ce595af90e09e49abf89c2df50a8a16b08ba4b30133",
+          "distribution": "fedora",
+          "release": "45",
+          "package_count": 501
+        }
+      }
+    ],
+    "disk_guid": "8F191725-D743-44A8-A316-E6DD9BDD37C4",
+    "sector_size": 512,
+    "partitions": [
+      {
+        "number": 1,
+        "name": "esp",
+        "type": "esp",
+        "type_guid": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+        "partuuid": "959DD5B6-392E-4317-896A-2A5DC8350D29",
+        "first_lba": 2048,
+        "last_lba": 526335,
+        "attributes": "0x0000000000000000",
+        "bytes": 268435456
+      },
+      {
+        "number": 2,
+        "name": "root-x86-64",
+        "type": "root-x86-64",
+        "type_guid": "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709",
+        "partuuid": "081F2D35-CBF0-28FD-6769-E56578210155",
+        "first_lba": 526336,
+        "last_lba": 2172751,
+        "attributes": "0x1000000000000000",
+        "bytes": 842964992,
+        "sha256": "57ef301c221fe998c979e93173bd3ec3cd8453e0663766a23ec6b03b97198879"
+      },
+      {
+        "number": 3,
+        "name": "root-x86-64-verity",
+        "type": "root-x86-64-verity",
+        "type_guid": "2C7357ED-EBD2-46D9-AEC1-23D437EC2BF5",
+        "partuuid": "63034474-14AE-D0E2-0ED3-4B26996F366E",
+        "first_lba": 2172928,
+        "last_lba": 2185911,
+        "attributes": "0x1000000000000000",
+        "bytes": 6647808,
+        "sha256": "f02e8ae284cc50cb8e11f781b678307875177d98952456c861a2b5f89de2a0b0"
+      }
+    ],
+    "esp": {
+      "fat_type": "FAT32",
+      "volume_id": "3BB32310",
+      "volume_label": "SBM",
+      "bytes": 268435456,
+      "free_bytes": 185980928,
+      "files": [
+        {
+          "path": "EFI/BOOT/BOOTX64.EFI",
+          "size": 465920,
+          "sha256": "729ef70a39d016c00cf70a9a750632dfde5c00617af444aa41db9ccee48948a3"
+        },
+        {
+          "path": "EFI/sbm/media.json",
+          "size": 5525,
+          "sha256": "11f1b68e5a02142b44ecbe74e6d530771076cb1a20865ec3d92212807ef5814b"
+        },
+        {
+          "path": "EFI/sbm/policy.json",
+          "size": 226,
+          "sha256": "2b8b8c6d6d2cff38a4d136caae7fb1e2a2c82555b8a71d92d4199770f2f619e8"
+        },
+        {
+          "path": "EFI/sbm/recovery/manifest.json",
+          "size": 323,
+          "sha256": "cb5b883c51c87b5c1ce19c0d20c5ded91d3b917edcbfe4f305c2af2d07dec3da"
+        },
+        {
+          "path": "EFI/sbm/recovery/slot-a/sbm-core-x86_64.efi",
+          "size": 80909144,
+          "sha256": "5b470091531e2196cb35de3fcc86f040ef56c8d774fecaafc152126a0593672c"
+        }
+      ]
+    },
+    "verified": [
+      "gpt: protective MBR, both headers and entry arrays valid",
+      "gpt: x86_64 layout (3 partitions: ESP + x86_64 root/verity), 1 MiB aligned",
+      "gpt: disk and partition GUIDs unique",
+      "esp: FAT32, 256 MiB, 177 MiB free",
+      "esp: recovery manifest and policy parse as sbm-common 1.0",
+      "esp: media.json matches every ESP file and partition digest",
+      "x86_64: menu PE 0x8664, UKI PE 0x8664, manifest digest, PARTUUIDs from roothash, dm-verity tree recomputed"
+    ],
+    "outputs": [
+      {
+        "filename": "sbm-0.0.1-uefi-x86_64.raw",
+        "size_bytes": 1120927744,
+        "sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378"
+      },
+      {
+        "filename": "sbm-0.0.1-uefi-x86_64.raw.zst",
+        "size_bytes": 896237084,
+        "sha256": "4f825fc1eaedebe6cf2436a3ea33613c4be9879e7e950de313d11e115a23381e"
+      }
+    ]
+  },
+  "repro_report": {
+    "lock": "media/0.0.1.lock.toml",
+    "git_commit": "870069dccd2b7fc680a35955c27a6481bb46a0e4",
+    "arch": "x86_64",
+    "profile": "offline-full",
+    "compressed": true,
+    "reproducible": true,
+    "files": {
+      "build-receipt.json": {
+        "run_a": {
+          "sha256": "be7d18e715e8f1127106bd1a5eb829f0177c6d80d9a5e97227713c82be8d57ef",
+          "size_bytes": 8147
+        },
+        "run_b": {
+          "sha256": "be7d18e715e8f1127106bd1a5eb829f0177c6d80d9a5e97227713c82be8d57ef",
+          "size_bytes": 8147
+        },
+        "identical": true
+      },
+      "release-manifest.v1.json": {
+        "run_a": {
+          "sha256": "af26a50775ee6c0a6ea79099683cc1a2e79773734c3c73ae413eb82946dec70d",
+          "size_bytes": 1299
+        },
+        "run_b": {
+          "sha256": "af26a50775ee6c0a6ea79099683cc1a2e79773734c3c73ae413eb82946dec70d",
+          "size_bytes": 1299
+        },
+        "identical": true
+      },
+      "sbm-0.0.1-uefi-x86_64.raw": {
+        "run_a": {
+          "sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+          "size_bytes": 1120927744
+        },
+        "run_b": {
+          "sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+          "size_bytes": 1120927744
+        },
+        "identical": true
+      },
+      "sbm-0.0.1-uefi-x86_64.raw.sha256": {
+        "run_a": {
+          "sha256": "e7e96f8998204832c522510cc8cdfe5ae8e0c29641531f409c0bd7495c78a7bd",
+          "size_bytes": 92
+        },
+        "run_b": {
+          "sha256": "e7e96f8998204832c522510cc8cdfe5ae8e0c29641531f409c0bd7495c78a7bd",
+          "size_bytes": 92
+        },
+        "identical": true
+      },
+      "sbm-0.0.1-uefi-x86_64.raw.zst": {
+        "run_a": {
+          "sha256": "4f825fc1eaedebe6cf2436a3ea33613c4be9879e7e950de313d11e115a23381e",
+          "size_bytes": 896237084
+        },
+        "run_b": {
+          "sha256": "4f825fc1eaedebe6cf2436a3ea33613c4be9879e7e950de313d11e115a23381e",
+          "size_bytes": 896237084
+        },
+        "identical": true
+      },
+      "sbm-0.0.1-uefi-x86_64.raw.zst.sha256": {
+        "run_a": {
+          "sha256": "282502be555cc3ac7ed8b367bc5c302fa8f66d07a74ebc6ce8d23a7e4eec7c20",
+          "size_bytes": 96
+        },
+        "run_b": {
+          "sha256": "282502be555cc3ac7ed8b367bc5c302fa8f66d07a74ebc6ce8d23a7e4eec7c20",
+          "size_bytes": 96
+        },
+        "identical": true
+      }
+    }
+  },
+  "integration_virtio": {
+    "schema": "sbm-lab.integration.v2",
+    "id": "int-x86_64-18ebfee2024215c0-151ab-1",
+    "arch": "x86_64",
+    "gpu": "virtio",
+    "accel": "tcg",
+    "execution_class": "emulation",
+    "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+    "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+    "success": true,
+    "failure_reason": null,
+    "menu_ready_1_us": 189596,
+    "menu_ready_2_us": 199533,
+    "verify_done_us": 1341570,
+    "verify_done_ok": true,
+    "latency_budget_applicable": false,
+    "latency_budget_met": null,
+    "gates": {
+      "gate1_uefi_menu": true,
+      "gate2_discovered_targets": true,
+      "gate3_manage_computer_handoff": true,
+      "gate4_real_linux_core": true,
+      "gate5_management_ui": true,
+      "gate6_gparted_and_disks": true,
+      "gate7_reboot_and_confirmation": true,
+      "gate8_offline": true,
+      "gate9_integrity_and_decoy": true
+    },
+    "stages_ms": {
+      "core_ui_ready": 59868,
+      "gparted_launched": 66219,
+      "uefi_menu_1": 2568,
+      "uefi_menu_2": 107559
+    },
+    "duration_ms": 118391,
+    "screenshots": {
+      "01-uefi-menu": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/01-uefi-menu.ppm",
+      "02-core-ui": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/02-core-ui.ppm",
+      "03-gparted": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/03-gparted.ppm",
+      "04-gparted-devices": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/04-gparted-devices.ppm",
+      "05-post-reboot-menu": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/05-post-reboot-menu.ppm"
+    },
+    "screenshot_non_blank": {
+      "01-uefi-menu": true,
+      "02-core-ui": true,
+      "03-gparted": true,
+      "04-gparted-devices": true,
+      "05-post-reboot-menu": true
+    },
+    "gparted_visual_delta": 0.4381103515625,
+    "qmp_events": [
+      {
+        "data": {
+          "offset": 0,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 380150,
+          "seconds": 1795809126
+        }
+      },
+      {
+        "data": {
+          "offset": 0,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 590073,
+          "seconds": 1795809126
+        }
+      },
+      {
+        "data": {
+          "guest": true,
+          "reason": "guest-reset"
+        },
+        "event": "RESET",
+        "timestamp": {
+          "microseconds": 820768,
+          "seconds": 1795809229
+        }
+      },
+      {
+        "data": {
+          "offset": -1,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 186069,
+          "seconds": 1795809231
+        }
+      },
+      {
+        "data": {
+          "offset": 0,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 498328,
+          "seconds": 1795809231
+        }
+      }
+    ],
+    "qmp_actions": [
+      "send-key: c (Manage Computer)",
+      "click_abs(462, 378) Open GParted",
+      "click_abs(926, 213) GParted device selector",
+      "send-keys: esc, ctrl+q (close GParted)",
+      "click_abs(296, 446) Reboot",
+      "click_abs(300, 520) Confirm Reboot"
+    ],
+    "last_attempt": {
+      "attempt_id": "d3c665a6-0002-4525-8472-95bf10ff880d",
+      "consecutive_failures": 0,
+      "schema_version": "1.0",
+      "slot": "slot-a",
+      "status": "confirmed",
+      "target_id": "sbm-core:slot-a",
+      "timestamp_unix": 1795809129
+    },
+    "current_handoff_present": true,
+    "boot_success_consumed": true,
+    "decoy_esp_unchanged": true,
+    "fixture_disks_unchanged": true,
+    "inputs_unchanged": true,
+    "qemu_argv": [
+      "-machine",
+      "q35",
+      "-accel",
+      "tcg",
+      "-cpu",
+      "qemu64",
+      "-m",
+      "4096",
+      "-smp",
+      "2",
+      "-display",
+      "none",
+      "-nodefaults",
+      "-vga",
+      "none",
+      "-device",
+      "virtio-vga,xres=1280,yres=800",
+      "-drive",
+      "if=pflash,format=raw,unit=0,readonly=on,file=/opt/homebrew/Cellar/qemu/11.1.3/share/qemu/edk2-x86_64-code.fd",
+      "-drive",
+      "if=pflash,format=raw,unit=1,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/vars.fd",
+      "-serial",
+      "file:/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/serial.log",
+      "-chardev",
+      "file,id=debugcon,path=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/debugcon.log",
+      "-device",
+      "isa-debugcon,iobase=0x402,chardev=debugcon",
+      "-qmp",
+      "unix:/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/qmp.sock,server=on,wait=off",
+      "-device",
+      "qemu-xhci,id=xhci",
+      "-device",
+      "usb-kbd,bus=xhci.0",
+      "-device",
+      "usb-tablet,bus=xhci.0",
+      "-drive",
+      "if=none,id=decoy,format=raw,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/decoy-esp.raw",
+      "-device",
+      "virtio-blk-pci,drive=decoy,bootindex=1,serial=SBMDECOY",
+      "-drive",
+      "if=none,id=disk1g,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/disk-1g.qcow2",
+      "-device",
+      "virtio-blk-pci,drive=disk1g,bootindex=2,serial=SBMTEST1G",
+      "-drive",
+      "if=none,id=disk2g,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/disk-2g.qcow2",
+      "-device",
+      "virtio-blk-pci,drive=disk2g,bootindex=3,serial=SBMTEST2G",
+      "-drive",
+      "if=none,id=sbmusb,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/sbm-usb.qcow2",
+      "-device",
+      "usb-storage,bus=xhci.0,drive=sbmusb,removable=on,bootindex=0"
+    ],
+    "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1/serial.log",
+    "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebfee2024215c0-151ab-1"
+  },
+  "integration_software_fallback": {
+    "schema": "sbm-lab.integration.v2",
+    "id": "int-x86_64-18ebff0043114210-152c3-1",
+    "arch": "x86_64",
+    "gpu": "software",
+    "accel": "tcg",
+    "execution_class": "emulation",
+    "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+    "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+    "success": true,
+    "failure_reason": null,
+    "menu_ready_1_us": 189345,
+    "menu_ready_2_us": 200336,
+    "verify_done_us": 1359846,
+    "verify_done_ok": true,
+    "latency_budget_applicable": false,
+    "latency_budget_met": null,
+    "gates": {
+      "gate1_uefi_menu": true,
+      "gate2_discovered_targets": true,
+      "gate3_manage_computer_handoff": true,
+      "gate4_real_linux_core": true,
+      "gate5_management_ui": true,
+      "gate6_gparted_and_disks": true,
+      "gate7_reboot_and_confirmation": true,
+      "gate8_offline": true,
+      "gate9_integrity_and_decoy": true
+    },
+    "stages_ms": {
+      "core_ui_ready": 54778,
+      "gparted_launched": 61118,
+      "uefi_menu_1": 2536,
+      "uefi_menu_2": 102399
+    },
+    "duration_ms": 113063,
+    "screenshots": {
+      "01-uefi-menu": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/01-uefi-menu.ppm",
+      "02-core-ui": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/02-core-ui.ppm",
+      "03-gparted": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/03-gparted.ppm",
+      "04-gparted-devices": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/04-gparted-devices.ppm",
+      "05-post-reboot-menu": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/05-post-reboot-menu.ppm"
+    },
+    "screenshot_non_blank": {
+      "01-uefi-menu": true,
+      "02-core-ui": true,
+      "03-gparted": true,
+      "04-gparted-devices": true,
+      "05-post-reboot-menu": true
+    },
+    "gparted_visual_delta": 0.4385986328125,
+    "qmp_events": [
+      {
+        "data": {
+          "offset": 0,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 344235,
+          "seconds": 1795809256
+        }
+      },
+      {
+        "data": {
+          "offset": 0,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 545923,
+          "seconds": 1795809256
+        }
+      },
+      {
+        "data": {
+          "guest": true,
+          "reason": "guest-reset"
+        },
+        "event": "RESET",
+        "timestamp": {
+          "microseconds": 641302,
+          "seconds": 1795809354
+        }
+      },
+      {
+        "data": {
+          "offset": -1,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 3373,
+          "seconds": 1795809356
+        }
+      },
+      {
+        "data": {
+          "offset": -1,
+          "qom-path": "/machine/unattached/device[3]/rtc"
+        },
+        "event": "RTC_CHANGE",
+        "timestamp": {
+          "microseconds": 317329,
+          "seconds": 1795809356
+        }
+      }
+    ],
+    "qmp_actions": [
+      "send-key: c (Manage Computer)",
+      "click_abs(462, 378) Open GParted",
+      "click_abs(926, 213) GParted device selector",
+      "send-keys: esc, ctrl+q (close GParted)",
+      "click_abs(296, 446) Reboot",
+      "click_abs(300, 520) Confirm Reboot"
+    ],
+    "last_attempt": {
+      "attempt_id": "7d4d4cac-f6b5-43ab-8973-14c02ef0016c",
+      "consecutive_failures": 0,
+      "schema_version": "1.0",
+      "slot": "slot-a",
+      "status": "confirmed",
+      "target_id": "sbm-core:slot-a",
+      "timestamp_unix": 1795809259
+    },
+    "current_handoff_present": true,
+    "boot_success_consumed": true,
+    "decoy_esp_unchanged": true,
+    "fixture_disks_unchanged": true,
+    "inputs_unchanged": true,
+    "qemu_argv": [
+      "-machine",
+      "q35",
+      "-accel",
+      "tcg",
+      "-cpu",
+      "qemu64",
+      "-m",
+      "4096",
+      "-smp",
+      "2",
+      "-display",
+      "none",
+      "-nodefaults",
+      "-device",
+      "VGA",
+      "-drive",
+      "if=pflash,format=raw,unit=0,readonly=on,file=/opt/homebrew/Cellar/qemu/11.1.3/share/qemu/edk2-x86_64-code.fd",
+      "-drive",
+      "if=pflash,format=raw,unit=1,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/vars.fd",
+      "-serial",
+      "file:/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/serial.log",
+      "-chardev",
+      "file,id=debugcon,path=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/debugcon.log",
+      "-device",
+      "isa-debugcon,iobase=0x402,chardev=debugcon",
+      "-qmp",
+      "unix:/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/qmp.sock,server=on,wait=off",
+      "-device",
+      "qemu-xhci,id=xhci",
+      "-device",
+      "usb-kbd,bus=xhci.0",
+      "-device",
+      "usb-tablet,bus=xhci.0",
+      "-drive",
+      "if=none,id=decoy,format=raw,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/decoy-esp.raw",
+      "-device",
+      "virtio-blk-pci,drive=decoy,bootindex=1,serial=SBMDECOY",
+      "-drive",
+      "if=none,id=disk1g,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/disk-1g.qcow2",
+      "-device",
+      "virtio-blk-pci,drive=disk1g,bootindex=2,serial=SBMTEST1G",
+      "-drive",
+      "if=none,id=disk2g,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/disk-2g.qcow2",
+      "-device",
+      "virtio-blk-pci,drive=disk2g,bootindex=3,serial=SBMTEST2G",
+      "-drive",
+      "if=none,id=sbmusb,format=qcow2,file=/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/sbm-usb.qcow2",
+      "-device",
+      "usb-storage,bus=xhci.0,drive=sbmusb,removable=on,bootindex=0"
+    ],
+    "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1/serial.log",
+    "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/int-x86_64-18ebff0043114210-152c3-1"
+  },
+  "negative_suite": [
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfec166c67520-14a24-1",
+      "scenario": "tampered-uki",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "decoy_esp_unchanged": true,
+        "inputs_unchanged": true,
+        "linux_never_started": true,
+        "offline_no_nic": true,
+        "verify_done_failed": true
+      },
+      "duration_ms": 8193,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec166c67520-14a24-1/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec166c67520-14a24-1"
+    },
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfec3d7b0aee8-14a24-4",
+      "scenario": "corrupt-verity",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "boot_success_never_written": true,
+        "decoy_esp_unchanged": true,
+        "inputs_unchanged": true,
+        "linux_started": true,
+        "offline_no_nic": true,
+        "ui_never_ready": true,
+        "uki_verified_before_mount": true,
+        "verity_rejected_mount": true
+      },
+      "duration_ms": 22269,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec3d7b0aee8-14a24-4/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec3d7b0aee8-14a24-4"
+    },
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfec987a36688-14a24-6",
+      "scenario": "invalid-handoff",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "boot_success_declined": true,
+        "boot_success_file_absent": true,
+        "decoy_esp_unchanged": true,
+        "handoff_unverified": true,
+        "inputs_unchanged": true,
+        "offline_no_nic": true
+      },
+      "duration_ms": 61993,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec987a36688-14a24-6/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfec987a36688-14a24-6"
+    },
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfed880fc0268-14a24-a",
+      "scenario": "stale-boot-success",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "attempt_confirm_rejected": true,
+        "attempt_not_confirmed_in_json": true,
+        "decoy_esp_unchanged": true,
+        "inputs_unchanged": true,
+        "offline_no_nic": true,
+        "stale_report_removed": true
+      },
+      "duration_ms": 5304,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfed880fc0268-14a24-a/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfed880fc0268-14a24-a"
+    },
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfeda403e29c0-14a24-e",
+      "scenario": "local-boot-request-negative",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "decoy_esp_unchanged": true,
+        "inputs_unchanged": true,
+        "offline_no_nic": true,
+        "request_deleted_before_act": true,
+        "request_rejected": true,
+        "target_not_launched": true
+      },
+      "duration_ms": 5187,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfeda403e29c0-14a24-e/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfeda403e29c0-14a24-e"
+    },
+    {
+      "schema": "sbm-lab.integration-negative.v1",
+      "id": "n-18ebfedbf6f0a6b0-14a24-12",
+      "scenario": "local-boot-request-positive",
+      "arch": "x86_64",
+      "accel": "tcg",
+      "execution_class": "emulation",
+      "image": "/Users/felg/gh/smart-boot-menu/install/build/qual-0.0.1/x86_64/sbm-0.0.1-uefi-x86_64.raw",
+      "image_sha256": "9bebf042be7c79feea29d2080c192ea50133d74fb29612545356b1e23756a378",
+      "success": true,
+      "failure_reason": null,
+      "assertions": {
+        "decoy_esp_unchanged": true,
+        "inputs_unchanged": true,
+        "offline_no_nic": true,
+        "policy_core_request": true,
+        "request_deleted_before_act": true,
+        "requested_target_launched": true
+      },
+      "duration_ms": 4902,
+      "inputs_unchanged": true,
+      "decoy_esp_unchanged": true,
+      "serial_log": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfedbf6f0a6b0-14a24-12/serial.log",
+      "run_dir": "/Users/felg/gh/smart-boot-menu/sbm-lab/var/runs/n-18ebfedbf6f0a6b0-14a24-12"
+    }
+  ],
+  "screenshots": [
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/01-uefi-menu.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/02-core-ui.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/03-gparted.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/04-gparted-devices.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/05-post-reboot-menu.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/06-vga-software-ui.png",
+    "screenshots/2026-11-27-sbm-0.0.1-qual/x86_64/07-tampered-uki-refusal.png"
+  ],
+  "hosted_kvm_ci_sbm_uefi": {
+    "run_id": 45980442284,
+    "commit": "4bfb3ba6457a4f6625d13c6a1435f69f15b8d011",
+    "note": "Hosted GitHub Actions ubuntu-latest native KVM OVMF runs on the exact frozen sbm-x86_64.efi binary with synthetic fixture media (N=2 cold + N=1 warm, plus enrolled dev Secure Boot refusal). Does not substitute for N>=10 native KVM timing on the assembled 1.12 GiB sbm-0.0.1-uefi-x86_64.raw image.",
+    "kvm_smoke": {
+      "schema": "sbm-lab.run.v1",
+      "id": "18ebdf84fb505e1f-2052-1",
+      "profile": "sbm-uefi-x86_64",
+      "success": true,
+      "failure_reason": null,
+      "arch": "x86_64",
+      "accel": "kvm",
+      "execution_class": "accelerated_virtualization",
+      "representative_of_physical_hardware": false,
+      "execution_note": "Hardware-accelerated virtualization. This is not a physical-machine measurement.",
+      "firmware_banner": null,
+      "markers": [
+        "menu-ready us=67668 arch=x86_64 targets=5",
+        "chainload-returned status=SUCCESS",
+        "menu-ready us=51473 arch=x86_64 targets=5",
+        "sbat ok",
+        "uefi_entry",
+        "clock hz=2473000000",
+        "gop 1280x800 Bgr stride=1280",
+        "backbuffer bytes=4096000",
+        "first_frame us=16483",
+        "discovery_done us=31734 count=5",
+        "remote disabled",
+        "policy reason=menu us=34902",
+        "mem conventional_pages=248916 delta=37",
+        "target Windows",
+        "target Fedora Linux",
+        "target systemd-boot",
+        "target Ubuntu",
+        "target SBM Core Slot A",
+        "menu_ready us=67668",
+        "glyph_cache glyphs=113 bytes=13076 hits=202 misses=113",
+        "key c",
+        "verify_done us=968 bytes=119296 reads=1 chunk=1048576 result=ok",
+        "integrity verified sha256=962094d1f0d5a1c3f7577333e9820932099b7feaaded6cdd75d75b3a99fa0364",
+        "attempt-id source=derived",
+        "handoff published attempt=63da1d63-4fd8-4fa0-97a4-bbc174c4cf56 sha256=2d91e38cea97be60a2eb93cc8b878b25088eeaec24d804e46c5426ec61e1d61a",
+        "chainload SBM Core Slot A",
+        "chainload method=device-path",
+        "integrity firmware-not-verified target=sbm-core:slot-a",
+        "fixture_started",
+        "fixture_recovery_valid esp=ddffbfd2-0ee8-47bc-ad4e-64ebecaa5386",
+        "chainload_returned status=SUCCESS",
+        "clock hz=2964000000",
+        "first_frame us=13238",
+        "discovery_done us=27114 count=5",
+        "policy reason=menu us=29467",
+        "mem conventional_pages=248915 delta=38",
+        "menu_ready us=51473"
+      ],
+      "boot_targets": [],
+      "screenshot": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/screenshot.ppm",
+      "guest_screenshot": null,
+      "serial_log": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/serial.log",
+      "duration_ms": 3707,
+      "stages_ms": {
+        "attempt-id": 1550,
+        "backbuffer": 1462,
+        "chainload": 1591,
+        "chainload-returned": 1813,
+        "chainload_returned": 1833,
+        "clock": 1442,
+        "discovery_done": 1462,
+        "first_frame": 1462,
+        "fixture_recovery_valid": 1592,
+        "fixture_started": 1591,
+        "glyph_cache": 1509,
+        "gop": 1462,
+        "handoff": 1591,
+        "integrity": 1550,
+        "key": 1550,
+        "mem": 1489,
+        "menu-ready": 1509,
+        "menu_ready": 1509,
+        "policy": 1489,
+        "remote": 1469,
+        "sbat": 1442,
+        "target": 1489,
+        "uefi_entry": 1442,
+        "verify_done": 1550
+      },
+      "qemu_argv": [
+        "-machine",
+        "q35",
+        "-accel",
+        "kvm",
+        "-cpu",
+        "qemu64",
+        "-m",
+        "1024",
+        "-smp",
+        "1",
+        "-display",
+        "none",
+        "-nodefaults",
+        "-device",
+        "VGA",
+        "-drive",
+        "if=pflash,format=raw,unit=0,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+        "-drive",
+        "if=pflash,format=raw,unit=1,file=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/vars.fd",
+        "-serial",
+        "file:/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/serial-qemu.log",
+        "-chardev",
+        "file,id=debugcon,path=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/debugcon.log",
+        "-device",
+        "isa-debugcon,iobase=0x402,chardev=debugcon",
+        "-qmp",
+        "unix:/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/qmp.sock,server=on,wait=off",
+        "-device",
+        "qemu-xhci,id=xhci",
+        "-device",
+        "usb-kbd,bus=xhci.0",
+        "-device",
+        "usb-tablet,bus=xhci.0",
+        "-drive",
+        "if=none,id=probe,format=raw,file=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1/probe.raw",
+        "-device",
+        "virtio-blk-pci,drive=probe,bootindex=0"
+      ],
+      "safety": {
+        "backing_hashes_unchanged": true,
+        "firmware_code_unchanged": true,
+        "firmware_template_unchanged": true,
+        "physical_disks_passed_through": false
+      },
+      "kept": false,
+      "run_dir": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf84fb505e1f-2052-1",
+      "payload_class": "synthetic-fixture"
+    },
+    "kvm_secure_denial": {
+      "schema": "sbm-lab.run.v1",
+      "id": "18ebdf8996145dae-224b-1",
+      "profile": "secure-recovery-picker",
+      "success": true,
+      "failure_reason": null,
+      "arch": "x86_64",
+      "accel": "kvm",
+      "execution_class": "accelerated_virtualization",
+      "representative_of_physical_hardware": false,
+      "execution_note": "Hardware-accelerated virtualization. This is not a physical-machine measurement.",
+      "firmware_banner": null,
+      "markers": [
+        "menu-ready us=69958 arch=x86_64 targets=5",
+        "sbat ok",
+        "uefi_entry",
+        "clock hz=2490000000",
+        "gop 1280x800 Bgr stride=1280",
+        "backbuffer bytes=4096000",
+        "first_frame us=16386",
+        "discovery_done us=38442 count=5",
+        "remote disabled",
+        "policy reason=menu us=41578",
+        "mem conventional_pages=230982 delta=35",
+        "target Windows",
+        "target Fedora Linux",
+        "target systemd-boot",
+        "target Ubuntu",
+        "target SBM Core Slot A",
+        "menu_ready us=69958",
+        "glyph_cache glyphs=113 bytes=13076 hits=202 misses=113",
+        "key c",
+        "verify_done us=951 bytes=119296 reads=1 chunk=1048576 result=ok",
+        "integrity verified sha256=962094d1f0d5a1c3f7577333e9820932099b7feaaded6cdd75d75b3a99fa0364",
+        "attempt-id source=derived",
+        "handoff published attempt=4f2aed20-c183-4c36-9afd-35560bf9653d sha256=3c4e1670a7c6c5248adddd9754c1c01b19991e33c28efb3f0e7e6387b066ec50",
+        "chainload SBM Core Slot A",
+        "chainload device-path ACCESS_DENIED",
+        "load_failed status=ACCESS_DENIED"
+      ],
+      "boot_targets": [],
+      "screenshot": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/screenshot.ppm",
+      "guest_screenshot": null,
+      "serial_log": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/serial.log",
+      "duration_ms": 2179,
+      "stages_ms": {
+        "attempt-id": 1649,
+        "backbuffer": 1541,
+        "chainload": 1709,
+        "clock": 1541,
+        "discovery_done": 1568,
+        "first_frame": 1541,
+        "glyph_cache": 1608,
+        "gop": 1541,
+        "handoff": 1689,
+        "integrity": 1649,
+        "key": 1649,
+        "load_failed": 1729,
+        "mem": 1588,
+        "menu-ready": 1608,
+        "menu_ready": 1608,
+        "policy": 1568,
+        "remote": 1568,
+        "sbat": 1541,
+        "target": 1588,
+        "uefi_entry": 1541,
+        "verify_done": 1649
+      },
+      "qemu_argv": [
+        "-machine",
+        "q35,smm=on",
+        "-accel",
+        "kvm",
+        "-cpu",
+        "qemu64",
+        "-m",
+        "1024",
+        "-smp",
+        "1",
+        "-display",
+        "none",
+        "-nodefaults",
+        "-no-reboot",
+        "-device",
+        "VGA",
+        "-drive",
+        "if=pflash,format=raw,unit=0,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.secboot.fd",
+        "-drive",
+        "if=pflash,format=raw,unit=1,file=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/vars.fd",
+        "-global",
+        "driver=cfi.pflash01,property=secure,value=on",
+        "-serial",
+        "file:/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/serial-qemu.log",
+        "-chardev",
+        "file,id=debugcon,path=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/debugcon.log",
+        "-device",
+        "isa-debugcon,iobase=0x402,chardev=debugcon",
+        "-qmp",
+        "unix:/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/qmp.sock,server=on,wait=off",
+        "-device",
+        "qemu-xhci,id=xhci",
+        "-device",
+        "usb-kbd,bus=xhci.0",
+        "-device",
+        "usb-tablet,bus=xhci.0",
+        "-drive",
+        "if=none,id=probe,format=raw,file=/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1/probe.raw",
+        "-device",
+        "virtio-blk-pci,drive=probe,bootindex=0"
+      ],
+      "safety": {
+        "backing_hashes_unchanged": true,
+        "firmware_code_unchanged": true,
+        "firmware_template_unchanged": true,
+        "physical_disks_passed_through": false
+      },
+      "kept": false,
+      "run_dir": "/home/runner/work/sbm-uefi/sbm-uefi/sbm-lab/var/runs/18ebdf8996145dae-224b-1",
+      "payload_class": "synthetic-fixture"
+    }
+  },
+  "qualification_status": "FUNCTIONAL_AND_NEGATIVE_PASS_NATIVE_KVM_REAL_MEDIA_LATENCY_PENDING",
+  "gate_scorecard": {
+    "gate0_immutable_reproducible_build": "PASS",
+    "gate1_uefi_menu_and_latency_n10": "PARTIAL_NATIVE_KVM_REAL_MEDIA_N10_PENDING",
+    "gate2_discovered_targets": "PASS",
+    "gate3_uki_verify_and_handoff": "PASS",
+    "gate4_real_linux_core_dm_verity_no_smoke": "PASS",
+    "gate5_management_ui_and_vga_fallback": "PASS",
+    "gate6_gparted_virtual_disks_and_ro_protection": "PASS",
+    "gate7_reboot_return_and_confirmation": "PASS",
+    "gate8_offline_no_nic": "PASS",
+    "gate9_ci_integrity_and_resource_hygiene": "PASS",
+    "neg1_tampered_uki": "PASS",
+    "neg2_corrupt_verity": "PASS",
+    "neg3_invalid_handoff_and_stale_confirmation": "PASS",
+    "neg4_decoy_esp_immutability": "PASS",
+    "rec5_bound_local_boot_request_pos_and_neg": "PASS",
+    "tier3_physical_hardware_hp_laptop": "OPT_IN_NOT_RUN"
+  }
+}
