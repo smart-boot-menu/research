@@ -1,0 +1,804 @@
+{
+  "schema": "sbm-agent15-uefi-evidence.v1",
+  "date": "2026-11-27",
+  "arm_benchmark_host": {
+    "soc": "Apple M5",
+    "model": "Mac17,3",
+    "ram_mib": 16384,
+    "macos": "27.0 (26A428)",
+    "qemu": "11.1.3",
+    "firmware": "AAVMF from QEMU 11.1.3",
+    "accel": "hvf",
+    "rustc": "1.100.0"
+  },
+  "arm_benchmark_config": {
+    "machine": "virt,gic-version=3",
+    "cpu": "host",
+    "smp": 1,
+    "memory_mib": 1024,
+    "graphics": "virtio-gpu-pci,xres=1280,yres=800",
+    "boot_device": "USB",
+    "network": "none",
+    "writable_layers": "disposable firmware variables and snapshot overlays",
+    "source_media_dualarch_sha256": "7be07b851f1e61be2544027c1caaf28febcc385bf01d8978b12738bef3be64a9",
+    "source_media_aarch64_sha256": "222625ad4b580242e1065e073928bd91b80a25d22bbd361bbce1a6728fec7875"
+  },
+  "dualarch_comparison": {
+    "baseline": {
+      "efi_sha256": "74ecca2d5951b260972343ca42d1062b732bdc18b21f65fdba691cbd98331275",
+      "efi_bytes": 206336,
+      "samples": [
+        {
+          "first_frame_us": 9150,
+          "discovery_done_us": 2077264,
+          "menu_ready_us": 2083346,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 9140,
+          "discovery_done_us": 2066144,
+          "menu_ready_us": 2072132,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 9003,
+          "discovery_done_us": 2048160,
+          "menu_ready_us": 2054316,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 9750,
+          "discovery_done_us": 2066995,
+          "menu_ready_us": 2072562,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 12309,
+          "discovery_done_us": 2983253,
+          "menu_ready_us": 2989980,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 9058,
+          "discovery_done_us": 2059098,
+          "menu_ready_us": 2067070,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 8266,
+          "discovery_done_us": 2081774,
+          "menu_ready_us": 2088376,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 8182,
+          "discovery_done_us": 2060457,
+          "menu_ready_us": 2066977,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 7498,
+          "discovery_done_us": 2066922,
+          "menu_ready_us": 2075062,
+          "core_chainload": false
+        },
+        {
+          "first_frame_us": 8136,
+          "discovery_done_us": 2144397,
+          "menu_ready_us": 2150222,
+          "core_chainload": false
+        }
+      ],
+      "efi_revision": "653012f4b3bf0351b23aede6001ca4ca1879a0af",
+      "statistics_us": {
+        "first_frame_us": {
+          "median": 9030.5,
+          "min": 7498,
+          "max": 12309
+        },
+        "discovery_done_us": {
+          "median": 2066958.5,
+          "min": 2048160,
+          "max": 2983253
+        },
+        "menu_ready_us": {
+          "median": 2073812.0,
+          "min": 2054316,
+          "max": 2989980
+        }
+      }
+    },
+    "candidate_sha2_opt_3": {
+      "efi_sha256": "fb666492bb243181a97336e0696ac74035f1fd9d04bac35bb4ef6a719a69c452",
+      "efi_bytes": 230912,
+      "samples": [
+        {
+          "first_frame_us": 9226,
+          "discovery_done_us": 10368,
+          "menu_ready_us": 16238,
+          "verify_done_us": 372547,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 8555,
+          "discovery_done_us": 9576,
+          "menu_ready_us": 17425,
+          "verify_done_us": 417945,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 7326,
+          "discovery_done_us": 8483,
+          "menu_ready_us": 15653,
+          "verify_done_us": 364679,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 10921,
+          "discovery_done_us": 12173,
+          "menu_ready_us": 20117,
+          "verify_done_us": 1061294,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6672,
+          "discovery_done_us": 7518,
+          "menu_ready_us": 15000,
+          "verify_done_us": 377586,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6635,
+          "discovery_done_us": 7536,
+          "menu_ready_us": 14330,
+          "verify_done_us": 372441,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 15116,
+          "discovery_done_us": 17851,
+          "menu_ready_us": 26720,
+          "verify_done_us": 731245,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9361,
+          "discovery_done_us": 10101,
+          "menu_ready_us": 16180,
+          "verify_done_us": 409489,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 8433,
+          "discovery_done_us": 9293,
+          "menu_ready_us": 15723,
+          "verify_done_us": 364059,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 13396,
+          "discovery_done_us": 14584,
+          "menu_ready_us": 24177,
+          "verify_done_us": 828880,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        }
+      ],
+      "efi_revision": "fd857b91b6012bbcfe60b0dd0bb4fdcd725aaf36",
+      "statistics_us": {
+        "first_frame_us": {
+          "median": 8890.5,
+          "min": 6635,
+          "max": 15116
+        },
+        "discovery_done_us": {
+          "median": 9838.5,
+          "min": 7518,
+          "max": 17851
+        },
+        "menu_ready_us": {
+          "median": 16209.0,
+          "min": 14330,
+          "max": 26720
+        },
+        "verify_done_us": {
+          "median": 393537.5,
+          "min": 364059,
+          "max": 1061294
+        }
+      }
+    },
+    "candidate_sha2_opt_z": {
+      "efi_sha256": "c9c623e4ac936375108b888798636ea57ba3fc02c45228470866bf0afa9e959a",
+      "efi_bytes": 225792,
+      "samples": [
+        {
+          "first_frame_us": 9931,
+          "discovery_done_us": 10995,
+          "menu_ready_us": 16829,
+          "verify_done_us": 618366,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 8824,
+          "discovery_done_us": 9887,
+          "menu_ready_us": 17395,
+          "verify_done_us": 612559,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9332,
+          "discovery_done_us": 10283,
+          "menu_ready_us": 16494,
+          "verify_done_us": 615448,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9737,
+          "discovery_done_us": 10674,
+          "menu_ready_us": 16817,
+          "verify_done_us": 611390,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 7139,
+          "discovery_done_us": 8025,
+          "menu_ready_us": 15141,
+          "verify_done_us": 614492,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 10243,
+          "discovery_done_us": 11140,
+          "menu_ready_us": 17310,
+          "verify_done_us": 615642,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6752,
+          "discovery_done_us": 7900,
+          "menu_ready_us": 14250,
+          "verify_done_us": 616976,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9035,
+          "discovery_done_us": 9916,
+          "menu_ready_us": 16363,
+          "verify_done_us": 614140,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9277,
+          "discovery_done_us": 10229,
+          "menu_ready_us": 17165,
+          "verify_done_us": 633447,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 11518,
+          "discovery_done_us": 12462,
+          "menu_ready_us": 19050,
+          "verify_done_us": 622534,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        }
+      ],
+      "efi_revision": "fd857b91b6012bbcfe60b0dd0bb4fdcd725aaf36",
+      "statistics_us": {
+        "first_frame_us": {
+          "median": 9304.5,
+          "min": 6752,
+          "max": 11518
+        },
+        "discovery_done_us": {
+          "median": 10256.0,
+          "min": 7900,
+          "max": 12462
+        },
+        "menu_ready_us": {
+          "median": 16823.0,
+          "min": 14250,
+          "max": 19050
+        },
+        "verify_done_us": {
+          "median": 615545.0,
+          "min": 611390,
+          "max": 633447
+        }
+      }
+    }
+  },
+  "aarch64_media": {
+    "source_revisions": {
+      "uefi": "664a0b3498bc91b2a5de5d57e7538087bc82aece",
+      "core": "c2020c7094454b44c9c70e382d9e4ff13b1ab4d8",
+      "lab": "8dee38dd17b765571109b6069a838b69993f2504",
+      "common": "abe3029c831f05d77d10cfb214a0c236903d00d9",
+      "install": "d2d2b3ab1a05b1ff584fddb06fb63e2740b3de82"
+    },
+    "media": {
+      "filename": "sbm-0.0.1-uefi-aarch64.raw",
+      "size_bytes": 1097859072,
+      "sha256": "222625ad4b580242e1065e073928bd91b80a25d22bbd361bbce1a6728fec7875",
+      "architectures": [
+        "aarch64"
+      ]
+    },
+    "artifacts": [
+      {
+        "component": "sbm-uefi",
+        "arch": "aarch64",
+        "platform": "uefi-native",
+        "filename": "sbm-uefi-aarch64.efi",
+        "size_bytes": 230912,
+        "sha256": "07b42b89a1003d74a592818c1e3b1dd6b11e8e571cddf8b41e7f93f960809368",
+        "sbat_generation": 1
+      },
+      {
+        "component": "sbm-core-uki",
+        "arch": "aarch64",
+        "platform": "uefi-native",
+        "filename": "sbm-core-aarch64.efi",
+        "size_bytes": 74513752,
+        "sha256": "4045a01f71a990bcd28ce91660334022084d6bdccd8327502c73c6ab0bf6e2c9",
+        "sbat_generation": 1
+      }
+    ],
+    "core_raw_sha256": "3ae0c4153dc6ba4b00975b6e0430ea8eca2adf52c7b717dd4eb9542d4f37357c",
+    "lock_sha256": "04707d7099375e6279004ab88e4abcb63d68fe078f067355660f127853218a29",
+    "verified_media_assembly": [
+      "gpt: protective MBR, both headers and entry arrays valid",
+      "gpt: aarch64 layout (3 partitions: ESP + aarch64 root/verity), 1 MiB aligned",
+      "gpt: disk and partition GUIDs unique",
+      "esp: FAT32, 256 MiB, 183 MiB free",
+      "esp: recovery manifest and policy parse as sbm-common 1.0",
+      "esp: media.json matches every ESP file and partition digest",
+      "aarch64: menu PE 0xaa64, UKI PE 0xaa64, manifest digest, PARTUUIDs from roothash, dm-verity tree recomputed"
+    ],
+    "performance_runs": {
+      "efi_sha256": "07b42b89a1003d74a592818c1e3b1dd6b11e8e571cddf8b41e7f93f960809368",
+      "efi_bytes": 230912,
+      "samples": [
+        {
+          "first_frame_us": 8570,
+          "discovery_done_us": 9712,
+          "menu_ready_us": 16180,
+          "verify_done_us": 366763,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 7515,
+          "discovery_done_us": 8669,
+          "menu_ready_us": 16202,
+          "verify_done_us": 357328,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6807,
+          "discovery_done_us": 7662,
+          "menu_ready_us": 14475,
+          "verify_done_us": 362073,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9237,
+          "discovery_done_us": 10105,
+          "menu_ready_us": 16629,
+          "verify_done_us": 362014,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9848,
+          "discovery_done_us": 10686,
+          "menu_ready_us": 17027,
+          "verify_done_us": 362713,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 7542,
+          "discovery_done_us": 8416,
+          "menu_ready_us": 15279,
+          "verify_done_us": 360023,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6853,
+          "discovery_done_us": 7746,
+          "menu_ready_us": 14351,
+          "verify_done_us": 364729,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 8371,
+          "discovery_done_us": 9057,
+          "menu_ready_us": 14608,
+          "verify_done_us": 360511,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 9751,
+          "discovery_done_us": 10579,
+          "menu_ready_us": 16239,
+          "verify_done_us": 362560,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        },
+        {
+          "first_frame_us": 6811,
+          "discovery_done_us": 7680,
+          "menu_ready_us": 14449,
+          "verify_done_us": 357285,
+          "verification": {
+            "bytes": 74513752,
+            "reads": 72,
+            "chunk": 1048576,
+            "result": "ok"
+          },
+          "core_chainload": true
+        }
+      ],
+      "efi_revision": "664a0b3498bc91b2a5de5d57e7538087bc82aece",
+      "statistics_us": {
+        "first_frame_us": {
+          "median": 7956.5,
+          "min": 6807,
+          "max": 9848
+        },
+        "discovery_done_us": {
+          "median": 8863.0,
+          "min": 7662,
+          "max": 10686
+        },
+        "menu_ready_us": {
+          "median": 15729.5,
+          "min": 14351,
+          "max": 17027
+        },
+        "verify_done_us": {
+          "median": 362043.5,
+          "min": 357285,
+          "max": 366763
+        }
+      }
+    },
+    "tampered_uki_run": {
+      "efi_sha256": "07b42b89a1003d74a592818c1e3b1dd6b11e8e571cddf8b41e7f93f960809368",
+      "efi_bytes": 230912,
+      "samples": [
+        {
+          "first_frame_us": 5901,
+          "discovery_done_us": 7018,
+          "menu_ready_us": 13772,
+          "verify_done_us": 362802,
+          "verification": {
+            "result": "failed",
+            "reason": "its SHA-256 digest does not match the recovery manifest"
+          },
+          "core_chainload": false
+        }
+      ],
+      "efi_revision": "664a0b3498bc91b2a5de5d57e7538087bc82aece",
+      "statistics_us": {
+        "first_frame_us": {
+          "median": 5901,
+          "min": 5901,
+          "max": 5901
+        },
+        "discovery_done_us": {
+          "median": 7018,
+          "min": 7018,
+          "max": 7018
+        },
+        "menu_ready_us": {
+          "median": 13772,
+          "min": 13772,
+          "max": 13772
+        },
+        "verify_done_us": {
+          "median": 362802,
+          "min": 362802,
+          "max": 362802
+        }
+      }
+    }
+  },
+  "aarch64_graphical_integration": {
+    "success": true,
+    "arch": "aarch64",
+    "accel": "hvf",
+    "image_sha256": "222625ad4b580242e1065e073928bd91b80a25d22bbd361bbce1a6728fec7875",
+    "gates": {
+      "gate1_uefi_menu": true,
+      "gate2_discovered_targets": true,
+      "gate3_manage_computer_handoff": true,
+      "gate4_real_linux_core": true,
+      "gate5_management_ui": true,
+      "gate6_gparted_and_disks": true,
+      "gate7_reboot_and_confirmation": true,
+      "gate8_offline": true,
+      "gate9_integrity_and_decoy": true
+    },
+    "stages_ms": {
+      "core_ui_ready": 16674,
+      "gparted_launched": 19972,
+      "uefi_menu_1": 5916,
+      "uefi_menu_2": 41414
+    },
+    "duration_ms": 60321,
+    "decoy_esp_unchanged": true,
+    "inputs_unchanged": true,
+    "boot_success_consumed": true,
+    "current_handoff_present": true,
+    "memory_mib": 4096,
+    "vcpu": 2,
+    "verified_attempt_status": "confirmed",
+    "first_frame_us": [
+      6751,
+      6449
+    ],
+    "discovery_done_us": [
+      9239,
+      9292
+    ],
+    "menu_ready_us": [
+      16115,
+      23324
+    ],
+    "verify_done_us": [
+      372178
+    ]
+  },
+  "synthetic_aarch64_firmware_handoff": {
+    "arch": "aarch64",
+    "attempt": "primary",
+    "efi_bytes": 230912,
+    "first_frame_us": 4168,
+    "discovery_us": 9400,
+    "menu_ready_us": 15242,
+    "verify_us": 631,
+    "backbuffer": 3145728,
+    "fixture_started": 2,
+    "chainload_returned": 2,
+    "handoff": true,
+    "attempt_file": true,
+    "chainload_ok": true
+  },
+  "synthetic_x86_64_firmware_handoff": {
+    "ci_run": 45967541247,
+    "success": true,
+    "accel": "kvm",
+    "payload_class": "synthetic-fixture",
+    "fixture_verified_volatile_vars_and_empty_options": true,
+    "safety": {
+      "backing_hashes_unchanged": true,
+      "firmware_code_unchanged": true,
+      "firmware_template_unchanged": true,
+      "physical_disks_passed_through": false
+    },
+    "markers": [
+      "first_frame us=15251",
+      "discovery_done us=49538 count=5",
+      "menu_ready us=64767",
+      "verify_done us=1107 bytes=119296 reads=1 chunk=1048576 result=ok",
+      "first_frame us=17335",
+      "discovery_done us=41540 count=5",
+      "menu_ready us=56963"
+    ]
+  },
+  "synthetic_x86_64_secure_boot_rejection": {
+    "ci_run": 45967541247,
+    "accel": "kvm",
+    "success": true,
+    "safety": {
+      "backing_hashes_unchanged": true,
+      "firmware_code_unchanged": true,
+      "firmware_template_unchanged": true,
+      "physical_disks_passed_through": false
+    },
+    "markers": [
+      "first_frame us=15674",
+      "discovery_done us=38878 count=5",
+      "menu_ready us=54940",
+      "verify_done us=1046 bytes=119296 reads=1 chunk=1048576 result=ok",
+      "load_failed status=ACCESS_DENIED"
+    ]
+  },
+  "hosted_ci": {
+    "docs": {
+      "run": 45958203648,
+      "conclusion": "success"
+    },
+    "sbm-common": {
+      "run": 45958218582,
+      "conclusion": "success"
+    },
+    "sbm-uefi": {
+      "run": 45967541247,
+      "conclusion": "success"
+    },
+    "sbm-core": {
+      "run": 45966525283,
+      "conclusion": "success"
+    },
+    "sbm-lab": {
+      "run": 45966525437,
+      "conclusion": "success"
+    },
+    "install": {
+      "run": 45961545474,
+      "conclusion": "success"
+    }
+  }
+}
