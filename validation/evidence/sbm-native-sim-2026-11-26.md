@@ -5,7 +5,7 @@ Measurements and checks for the native development environment described in
 Everything here is SIMULATED. It is evidence about the desktop tool, not about
 firmware, QEMU or a Linux image.
 
-- Host: MacBook Pro M5, 16 GiB, macOS 27.0 (Darwin 27.0.0 arm64, 10 logical CPUs)
+- Host: MacBook Air M5, 16 GiB, macOS 27.0 (Darwin 27.0.0 arm64, 10 logical CPUs)
 - Toolchain: rustc 1.100.0 (2026-11-09); dev profile, which `cargo xtask sim` uses
 - Script: `sbm-uefi/sim/measure.py` (cold builds use fresh `CARGO_TARGET_DIR`s;
   crates were already downloaded, so network time is excluded). No `RUSTC_WRAPPER`/sccache.
